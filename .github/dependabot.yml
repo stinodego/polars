@@ -1,0 +1,41 @@
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: saturday
+    assignees: stinodego
+    reviewers: stinodego
+
+  - package-ecosystem: cargo
+    directory: polars/core/
+    schedule:
+      interval: weekly
+      day: saturday
+    assignees: ritchie46
+    reviewers: ritchie46
+
+  - package-ecosystem: cargo
+    directory: py-polars/
+    schedule:
+      interval: weekly
+      day: saturday
+    assignees: ritchie46
+    reviewers: ritchie46
+
+  - package-ecosystem: pip
+    directory: py-polars/
+    schedule:
+      interval: weekly
+      day: saturday
+    assignees: stinodego
+    reviewers: stinodego
+
+  - package-ecosystem: pip
+    directory: py-polars/docs/
+    schedule:
+      interval: weekly
+      day: saturday
+    assignees: stinodego
+    reviewers: stinodego
