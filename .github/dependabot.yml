@@ -1,0 +1,41 @@
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: saturday
+    assignees: [stinodego]
+    reviewers: [stinodego]
+
+  - package-ecosystem: pip
+    directory: py-polars/
+    schedule:
+      interval: weekly
+      day: saturday
+    ignore:
+      - dependency-name: '*'
+        update-types: ['version-update:semver-patch']
+    assignees: [stinodego]
+    reviewers: [stinodego]
+
+  - package-ecosystem: pip
+    directory: py-polars/docs/
+    schedule:
+      interval: weekly
+      day: saturday
+    ignore:
+      - dependency-name: '*'
+        update-types: ['version-update:semver-patch']
+    assignees: [stinodego]
+    reviewers: [stinodego]
+
+  - package-ecosystem: cargo
+    directory: py-polars/
+    schedule:
+      interval: weekly
+    ignore:
+      - dependency-name: '*'
+        update-types: ['version-update:semver-patch']
+    assignees: [ritchie46]
+    reviewers: [ritchie46]
