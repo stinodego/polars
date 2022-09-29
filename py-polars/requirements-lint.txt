@@ -7,4 +7,4 @@ flake8-docstrings==1.6.0
 flake8-simplify==0.19.3
 flake8-tidy-imports==4.8.0
 isort==5.10.1
-pyupgrade==2.37.3
+pyupgrade==2.38.2
