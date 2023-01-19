@@ -56,7 +56,7 @@ class GroupBy(Generic[DF]):
     def __init__(
         self,
         df: PyDataFrame,
-        by: str | list[str],
+        by: list[str],
         dataframe_class: type[DF],
         maintain_order: bool = False,
     ):
@@ -84,30 +84,34 @@ class GroupBy(Generic[DF]):
         self.maintain_order = maintain_order
 
     def __iter__(self) -> GroupBy[DF]:
-        by = {self.by} if isinstance(self.by, str) else set(self.by)
-
         # Aggregate groups for any single column that is not specified as 'by'
         columns = self._df.columns()
-        if len(by) < len(columns):
-            non_by_col = next(c for c in columns if c not in by)
+        if len(self.by) < len(columns):
+            non_by_col = next(c for c in columns if c not in set(self.by))
             groups_df = self.agg(pli.col(non_by_col).agg_groups())
+            group_keys = groups_df.select(self.by)
             group_indices = groups_df.select(non_by_col).to_series()
         else:
-            group_indices = pli.Series([[i] for i in range(self._df.height())])
+            group_keys = self._dataframe_class._from_pydf(self._df)
+            group_indices = pli.Series([[i] for i in range(group_keys.height)])
 
+        self._group_keys = group_keys.iterrows()
         self._group_indices = group_indices
         self._current_index = 0
 
         return self
 
-    def __next__(self) -> DF:
+    def __next__(self) -> tuple[tuple[object, ...], DF]:
         if self._current_index >= len(self._group_indices):
             raise StopIteration
 
         df = self._dataframe_class._from_pydf(self._df)
-        group = df[self._group_indices[self._current_index]]
+
+        group_key = next(self._group_keys)
+        group_data = df[self._group_indices[self._current_index]]
         self._current_index += 1
-        return group
+
+        return group_key, group_data
 
     def apply(self, f: Callable[[pli.DataFrame], pli.DataFrame]) -> DF:
         """

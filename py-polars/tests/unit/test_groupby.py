@@ -77,15 +77,15 @@ def test_groupby_iteration() -> None:
             "c": [6, 5, 4, 3, 2, 1],
         }
     )
-    expected_shapes = [(2, 3), (3, 3), (1, 3)]
+    expected_keys = [("a",), ("b",), ("c",)]
     expected_rows = [
         [("a", 1, 6), ("a", 3, 4)],
         [("b", 2, 5), ("b", 4, 3), ("b", 5, 2)],
         [("c", 6, 1)],
     ]
-    for i, group in enumerate(df.groupby("a", maintain_order=True)):
-        assert group.shape == expected_shapes[i]
-        assert group.rows() == expected_rows[i]
+    for i, (group, data) in enumerate(df.groupby("a", maintain_order=True)):
+        assert group == expected_keys[i]
+        assert data.rows() == expected_rows[i]
 
     # Grouped by ALL columns should give groups of a single row
     result = list(df.groupby(["a", "b", "c"]))

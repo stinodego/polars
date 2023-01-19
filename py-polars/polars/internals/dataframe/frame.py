@@ -3447,13 +3447,11 @@ class DataFrame:
                 f"invalid input for groupby arg `maintain_order`: {maintain_order}."
             )
         if isinstance(by, str):
-            by = [by]
-        return GroupBy(
-            self._df,
-            by,  # type: ignore[arg-type]
-            dataframe_class=self.__class__,
-            maintain_order=maintain_order,
-        )
+            by_list = [by]
+        elif not isinstance(by, list):
+            by_list = list(by)
+
+        return GroupBy(self._df, by_list, self.__class__, maintain_order=maintain_order)
 
     def groupby_rolling(
         self: DF,
