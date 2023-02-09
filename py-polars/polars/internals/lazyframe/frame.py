@@ -2129,7 +2129,7 @@ naive plan: (run LazyFrame.describe_optimized_plan() to see the optimized plan)
         │ 4               ┆ 7               ┆ 4   ┆ ["C"]           │
         └─────────────────┴─────────────────┴─────┴─────────────────┘
 
-        """  # noqa: W505
+        """
         if offset is None:
             offset = f"-{every}" if period is None else "0ns"
 
@@ -2157,12 +2157,13 @@ naive plan: (run LazyFrame.describe_optimized_plan() to see the optimized plan)
     def join_asof(
         self: LDF,
         other: LazyFrame,
+        on: str | None = None,
+        *,
         left_on: str | None = None,
         right_on: str | None = None,
-        on: str | None = None,
+        by: str | Sequence[str] | None = None,
         by_left: str | Sequence[str] | None = None,
         by_right: str | Sequence[str] | None = None,
-        by: str | Sequence[str] | None = None,
         strategy: AsofJoinStrategy = "backward",
         suffix: str = "_right",
         tolerance: str | int | float | None = None,
@@ -2191,13 +2192,13 @@ naive plan: (run LazyFrame.describe_optimized_plan() to see the optimized plan)
         ----------
         other
             Lazy DataFrame to join with.
+        on
+            Join column of both DataFrames. If set, `left_on` and `right_on` should be
+            None.
         left_on
             Join column of the left DataFrame.
         right_on
             Join column of the right DataFrame.
-        on
-            Join column of both DataFrames. If set, `left_on` and `right_on` should be
-            None.
         by
             Join on these columns before doing asof join.
         by_left
@@ -2327,10 +2328,11 @@ naive plan: (run LazyFrame.describe_optimized_plan() to see the optimized plan)
     def join(
         self: LDF,
         other: LazyFrame,
-        left_on: str | pli.Expr | Sequence[str | pli.Expr] | None = None,
-        right_on: str | pli.Expr | Sequence[str | pli.Expr] | None = None,
         on: str | pli.Expr | Sequence[str | pli.Expr] | None = None,
         how: JoinStrategy = "inner",
+        *,
+        left_on: str | pli.Expr | Sequence[str | pli.Expr] | None = None,
+        right_on: str | pli.Expr | Sequence[str | pli.Expr] | None = None,
         suffix: str = "_right",
         allow_parallel: bool = True,
         force_parallel: bool = False,
@@ -2342,15 +2344,15 @@ naive plan: (run LazyFrame.describe_optimized_plan() to see the optimized plan)
         ----------
         other
             Lazy DataFrame to join with.
-        left_on
-            Join column of the left DataFrame.
-        right_on
-            Join column of the right DataFrame.
         on
             Join column of both DataFrames. If set, `left_on` and `right_on` should be
             None.
         how : {'inner', 'left', 'outer', 'semi', 'anti', 'cross'}
             Join strategy.
+        left_on
+            Join column of the left DataFrame.
+        right_on
+            Join column of the right DataFrame.
         suffix
             Suffix to append to columns with a duplicate name.
         allow_parallel
@@ -3582,8 +3584,9 @@ naive plan: (run LazyFrame.describe_optimized_plan() to see the optimized plan)
 
     def unique(
         self: LDF,
-        maintain_order: bool = True,
         subset: str | Sequence[str] | None = None,
+        *,
+        maintain_order: bool = True,
         keep: UniqueKeepStrategy = "first",
     ) -> LDF:
         """

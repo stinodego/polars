@@ -1383,6 +1383,7 @@ def cov(
 def map(
     exprs: Sequence[str] | Sequence[pli.Expr],
     f: Callable[[Sequence[pli.Series]], pli.Series],
+    *,
     return_dtype: PolarsDataType | None = None,
 ) -> pli.Expr:
     """
@@ -1413,6 +1414,7 @@ def map(
 def apply(
     exprs: Sequence[str | pli.Expr],
     f: Callable[[Sequence[pli.Series]], pli.Series | Any],
+    *,
     return_dtype: PolarsDataType | None = None,
     returns_scalar: bool = True,
 ) -> pli.Expr:
@@ -1517,6 +1519,7 @@ def cumfold(
     acc: IntoExpr,
     f: Callable[[pli.Series, pli.Series], pli.Series],
     exprs: Sequence[pli.Expr | str] | pli.Expr,
+    *,
     include_init: bool = False,
 ) -> pli.Expr:
     """
@@ -1834,6 +1837,7 @@ def arange(
 
 def argsort_by(
     exprs: pli.Expr | str | Sequence[pli.Expr | str],
+    *,
     reverse: Sequence[bool] | bool = False,
 ) -> pli.Expr:
     """
@@ -2027,7 +2031,9 @@ def _date(
     return _datetime(year, month, day).cast(Date).alias("date")
 
 
-def concat_str(exprs: Sequence[pli.Expr | str] | pli.Expr, sep: str = "") -> pli.Expr:
+def concat_str(
+    exprs: Sequence[pli.Expr | str] | pli.Expr, *, sep: str = ""
+) -> pli.Expr:
     """
     Horizontally concat Utf8 Series in linear time. Non-Utf8 columns are cast to Utf8.
 
@@ -2326,6 +2332,7 @@ def struct(
 
 def struct(
     exprs: Sequence[pli.Expr | str | pli.Series] | pli.Expr | pli.Series,
+    *,
     eager: bool = False,
     schema: SchemaDict | None = None,
 ) -> pli.Expr | pli.Series:

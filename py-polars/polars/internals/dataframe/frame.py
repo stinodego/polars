@@ -4958,6 +4958,7 @@ class DataFrame:
         index: Sequence[str] | str,
         columns: Sequence[str] | str,
         aggregate_fn: PivotAgg | pli.Expr = "first",
+        *,
         maintain_order: bool = True,
         sort_columns: bool = False,
     ) -> DF:
@@ -6284,7 +6285,7 @@ class DataFrame:
         """
         return self._from_pydf(self._df.quantile(quantile, interpolation))
 
-    def to_dummies(self: DF, *, columns: Sequence[str] | None = None) -> DF:
+    def to_dummies(self: DF, columns: Sequence[str] | None = None) -> DF:
         """
         Get one hot encoded dummy variables.
 
@@ -6321,8 +6322,9 @@ class DataFrame:
 
     def unique(
         self: DF,
-        maintain_order: bool = True,
         subset: str | Sequence[str] | None = None,
+        *,
+        maintain_order: bool = True,
         keep: UniqueKeepStrategy = "first",
     ) -> DF:
         """
