@@ -1,10 +1,12 @@
 from __future__ import annotations
 
 import warnings
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING
+from typing import Any
 
 from polars.convert import from_arrow
-from polars.utils.decorators import deprecate_nonkeyword_arguments, deprecated_alias
+from polars.utils.decorators import deprecate_nonkeyword_arguments
+from polars.utils.decorators import deprecated_alias
 
 if TYPE_CHECKING:
     import polars.internals as pli

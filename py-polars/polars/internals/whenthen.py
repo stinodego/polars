@@ -2,7 +2,9 @@ from __future__ import annotations
 
 import contextlib
 import typing
-from typing import TYPE_CHECKING, Any, Iterable
+from typing import TYPE_CHECKING
+from typing import Any
+from typing import Iterable
 
 from polars import internals as pli
 
@@ -10,7 +12,8 @@ with contextlib.suppress(ImportError):  # Module not available when building doc
     from polars.polars import when as pywhen
 
 if TYPE_CHECKING:
-    from polars.internals.type_aliases import PolarsExprType, PythonLiteral
+    from polars.internals.type_aliases import PolarsExprType
+    from polars.internals.type_aliases import PythonLiteral
 
 
 class WhenThenThen:

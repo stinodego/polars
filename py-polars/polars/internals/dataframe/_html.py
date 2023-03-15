@@ -4,7 +4,8 @@ from __future__ import annotations
 import html
 import os
 from textwrap import dedent
-from typing import TYPE_CHECKING, Iterable
+from typing import TYPE_CHECKING
+from typing import Iterable
 
 if TYPE_CHECKING:
     from types import TracebackType

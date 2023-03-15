@@ -1,16 +1,20 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING
+from typing import Any
 
 from polars.convert import from_arrow
-from polars.dependencies import _DELTALAKE_AVAILABLE, deltalake
+from polars.dependencies import _DELTALAKE_AVAILABLE
+from polars.dependencies import deltalake
 from polars.io.pyarrow_dataset import scan_pyarrow_dataset
-from polars.utils.decorators import deprecate_nonkeyword_arguments, deprecated_alias
+from polars.utils.decorators import deprecate_nonkeyword_arguments
+from polars.utils.decorators import deprecated_alias
 
 if TYPE_CHECKING:
     from polars.dependencies import pyarrow as pa
-    from polars.internals import DataFrame, LazyFrame
+    from polars.internals import DataFrame
+    from polars.internals import LazyFrame
 
 
 @deprecate_nonkeyword_arguments()
@@ -329,7 +333,8 @@ def scan_delta(
 
 
 def _resolve_delta_lake_uri(table_uri: str) -> tuple[str, str, str]:
-    from urllib.parse import ParseResult, urlparse
+    from urllib.parse import ParseResult
+    from urllib.parse import urlparse
 
     parsed_result = urlparse(table_uri)
     scheme = parsed_result.scheme

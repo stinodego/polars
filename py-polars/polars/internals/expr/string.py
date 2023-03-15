@@ -3,17 +3,16 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 import polars.internals as pli
-from polars.datatypes import (
-    DataType,
-    Date,
-    Datetime,
-    Time,
-    is_polars_dtype,
-    py_type_to_dtype,
-)
+from polars.datatypes import DataType
+from polars.datatypes import Date
+from polars.datatypes import Datetime
+from polars.datatypes import Time
+from polars.datatypes import is_polars_dtype
+from polars.datatypes import py_type_to_dtype
 
 if TYPE_CHECKING:
-    from polars.datatypes import PolarsDataType, PolarsTemporalType
+    from polars.datatypes import PolarsDataType
+    from polars.datatypes import PolarsTemporalType
     from polars.internals.type_aliases import TransferEncoding
 
 

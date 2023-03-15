@@ -2,10 +2,14 @@ from __future__ import annotations
 
 from io import StringIO
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, BinaryIO, overload
+from typing import TYPE_CHECKING
+from typing import Any
+from typing import BinaryIO
+from typing import overload
 
 from polars.io.csv import read_csv
-from polars.utils.decorators import deprecate_nonkeyword_arguments, deprecated_alias
+from polars.utils.decorators import deprecate_nonkeyword_arguments
+from polars.utils.decorators import deprecated_alias
 from polars.utils.various import normalise_filepath
 
 if TYPE_CHECKING:

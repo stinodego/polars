@@ -1,4 +1,5 @@
-from polars.internals.lazyframe.frame import LazyFrame, wrap_ldf
+from polars.internals.lazyframe.frame import LazyFrame
+from polars.internals.lazyframe.frame import wrap_ldf
 
 __all__ = [
     "LazyFrame",

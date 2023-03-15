@@ -2,31 +2,36 @@ from __future__ import annotations
 
 import contextlib
 import warnings
-from datetime import date, datetime, time, timedelta
-from typing import TYPE_CHECKING, Any, Callable, Iterable, Sequence, overload
+from datetime import date
+from datetime import datetime
+from datetime import time
+from datetime import timedelta
+from typing import TYPE_CHECKING
+from typing import Any
+from typing import Callable
+from typing import Iterable
+from typing import Sequence
+from typing import overload
 
 from polars import internals as pli
-from polars.datatypes import (
-    DTYPE_TEMPORAL_UNITS,
-    Date,
-    Datetime,
-    Duration,
-    Int32,
-    Int64,
-    Struct,
-    Time,
-    UInt32,
-    is_polars_dtype,
-    py_type_to_dtype,
-)
+from polars.datatypes import DTYPE_TEMPORAL_UNITS
+from polars.datatypes import Date
+from polars.datatypes import Datetime
+from polars.datatypes import Duration
+from polars.datatypes import Int32
+from polars.datatypes import Int64
+from polars.datatypes import Struct
+from polars.datatypes import Time
+from polars.datatypes import UInt32
+from polars.datatypes import is_polars_dtype
+from polars.datatypes import py_type_to_dtype
 from polars.dependencies import _check_for_numpy
 from polars.dependencies import numpy as np
-from polars.utils.convert import (
-    _datetime_to_pl_timestamp,
-    _time_to_pl_time,
-    _timedelta_to_pl_timedelta,
-)
-from polars.utils.decorators import deprecate_nonkeyword_arguments, deprecated_alias
+from polars.utils.convert import _datetime_to_pl_timestamp
+from polars.utils.convert import _time_to_pl_time
+from polars.utils.convert import _timedelta_to_pl_timedelta
+from polars.utils.decorators import deprecate_nonkeyword_arguments
+from polars.utils.decorators import deprecated_alias
 
 with contextlib.suppress(ImportError):  # Module not available when building docs
     from polars.polars import arange as pyarange
@@ -52,7 +57,8 @@ with contextlib.suppress(ImportError):  # Module not available when building doc
     from polars.polars import max_exprs as _max_exprs
     from polars.polars import min_exprs as _min_exprs
     from polars.polars import pearson_corr as pypearson_corr
-    from polars.polars import py_datetime, py_duration
+    from polars.polars import py_datetime
+    from polars.polars import py_duration
     from polars.polars import reduce as pyreduce
     from polars.polars import repeat as _repeat
     from polars.polars import spearman_rank_corr as pyspearman_rank_corr
@@ -62,14 +68,13 @@ with contextlib.suppress(ImportError):  # Module not available when building doc
 if TYPE_CHECKING:
     import sys
 
-    from polars.datatypes import PolarsDataType, SchemaDict
-    from polars.internals.type_aliases import (
-        CorrelationMethod,
-        EpochTimeUnit,
-        IntoExpr,
-        RollingInterpolationMethod,
-        TimeUnit,
-    )
+    from polars.datatypes import PolarsDataType
+    from polars.datatypes import SchemaDict
+    from polars.internals.type_aliases import CorrelationMethod
+    from polars.internals.type_aliases import EpochTimeUnit
+    from polars.internals.type_aliases import IntoExpr
+    from polars.internals.type_aliases import RollingInterpolationMethod
+    from polars.internals.type_aliases import TimeUnit
 
     if sys.version_info >= (3, 8):
         from typing import Literal

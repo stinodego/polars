@@ -4,11 +4,9 @@ import pytest
 
 import polars as pl
 from polars.exceptions import InvalidAssert
-from polars.testing import (
-    assert_frame_equal,
-    assert_series_equal,
-    assert_series_not_equal,
-)
+from polars.testing import assert_frame_equal
+from polars.testing import assert_series_equal
+from polars.testing import assert_series_not_equal
 
 
 def test_compare_series_value_mismatch() -> None:

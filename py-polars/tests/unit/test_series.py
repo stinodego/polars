@@ -1,8 +1,14 @@
 from __future__ import annotations
 
 import math
-from datetime import date, datetime, time, timedelta
-from typing import TYPE_CHECKING, Any, Iterator, cast
+from datetime import date
+from datetime import datetime
+from datetime import time
+from datetime import timedelta
+from typing import TYPE_CHECKING
+from typing import Any
+from typing import Iterator
+from typing import cast
 
 import numpy as np
 import pandas as pd
@@ -10,23 +16,23 @@ import pyarrow as pa
 import pytest
 
 import polars as pl
-from polars.datatypes import (
-    Date,
-    Datetime,
-    Field,
-    Float64,
-    Int32,
-    Int64,
-    Time,
-    UInt32,
-    UInt64,
-)
+from polars.datatypes import Date
+from polars.datatypes import Datetime
+from polars.datatypes import Field
+from polars.datatypes import Float64
+from polars.datatypes import Int32
+from polars.datatypes import Int64
+from polars.datatypes import Time
+from polars.datatypes import UInt32
+from polars.datatypes import UInt64
 from polars.exceptions import ShapeError
 from polars.internals.construction import iterable_to_pyseries
-from polars.testing import assert_frame_equal, assert_series_equal
+from polars.testing import assert_frame_equal
+from polars.testing import assert_series_equal
 
 if TYPE_CHECKING:
-    from polars.internals.type_aliases import EpochTimeUnit, TimeUnit
+    from polars.internals.type_aliases import EpochTimeUnit
+    from polars.internals.type_aliases import TimeUnit
 
 
 def test_cum_agg() -> None:
@@ -1603,7 +1609,10 @@ def test_comparisons_bool_series_to_int() -> None:
     with pytest.raises(ValueError, match=match):
         srs_bool * 1
 
-    from operator import ge, gt, le, lt
+    from operator import ge
+    from operator import gt
+    from operator import le
+    from operator import lt
 
     for op in (ge, gt, le, lt):
         for scalar in (0, 1.0, True, False):

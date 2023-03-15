@@ -2,10 +2,14 @@ from __future__ import annotations
 
 from functools import reduce
 from operator import or_
-from typing import Callable, TypeVar
+from typing import Callable
+from typing import TypeVar
 from warnings import warn
 
-from polars.internals import DataFrame, Expr, LazyFrame, Series
+from polars.internals import DataFrame
+from polars.internals import Expr
+from polars.internals import LazyFrame
+from polars.internals import Series
 
 __all__ = [
     "register_expr_namespace",

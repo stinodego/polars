@@ -3,28 +3,37 @@ from __future__ import annotations
 import sys
 import textwrap
 import typing
-from datetime import date, datetime, time, timedelta
+from datetime import date
+from datetime import datetime
+from datetime import time
+from datetime import timedelta
 from decimal import Decimal
 from io import BytesIO
-from operator import floordiv, truediv
-from typing import TYPE_CHECKING, Any, Callable, Iterator, Sequence, cast
+from operator import floordiv
+from operator import truediv
+from typing import TYPE_CHECKING
+from typing import Any
+from typing import Callable
+from typing import Iterator
+from typing import Sequence
+from typing import cast
 
 import numpy as np
 import pyarrow as pa
 import pytest
 
 import polars as pl
-from polars.datatypes import DTYPE_TEMPORAL_UNITS, INTEGER_DTYPES
+from polars.datatypes import DTYPE_TEMPORAL_UNITS
+from polars.datatypes import INTEGER_DTYPES
 from polars.internals.construction import iterable_to_pydf
-from polars.testing import (
-    assert_frame_equal,
-    assert_frame_not_equal,
-    assert_series_equal,
-)
+from polars.testing import assert_frame_equal
+from polars.testing import assert_frame_not_equal
+from polars.testing import assert_series_equal
 from polars.testing.parametric import columns
 
 if TYPE_CHECKING:
-    from polars.internals.type_aliases import JoinStrategy, UniqueKeepStrategy
+    from polars.internals.type_aliases import JoinStrategy
+    from polars.internals.type_aliases import UniqueKeepStrategy
 
 if sys.version_info >= (3, 9):
     from zoneinfo import ZoneInfo

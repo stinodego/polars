@@ -1,11 +1,15 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any, BinaryIO
+from typing import TYPE_CHECKING
+from typing import Any
+from typing import BinaryIO
 
 from polars.dependencies import _PYARROW_AVAILABLE
-from polars.internals import DataFrame, LazyFrame
+from polars.internals import DataFrame
+from polars.internals import LazyFrame
 from polars.internals.io import _prepare_file_arg
-from polars.utils.decorators import deprecate_nonkeyword_arguments, deprecated_alias
+from polars.utils.decorators import deprecate_nonkeyword_arguments
+from polars.utils.decorators import deprecated_alias
 
 if TYPE_CHECKING:
     from io import BytesIO

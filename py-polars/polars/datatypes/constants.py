@@ -2,23 +2,21 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from polars.datatypes import (
-    Date,
-    Datetime,
-    Decimal,
-    Duration,
-    Float32,
-    Float64,
-    Int8,
-    Int16,
-    Int32,
-    Int64,
-    Time,
-    UInt8,
-    UInt16,
-    UInt32,
-    UInt64,
-)
+from polars.datatypes import Date
+from polars.datatypes import Datetime
+from polars.datatypes import Decimal
+from polars.datatypes import Duration
+from polars.datatypes import Float32
+from polars.datatypes import Float64
+from polars.datatypes import Int8
+from polars.datatypes import Int16
+from polars.datatypes import Int32
+from polars.datatypes import Int64
+from polars.datatypes import Time
+from polars.datatypes import UInt8
+from polars.datatypes import UInt16
+from polars.datatypes import UInt32
+from polars.datatypes import UInt64
 
 if TYPE_CHECKING:
     from polars.datatypes.type_aliases import PolarsDataType

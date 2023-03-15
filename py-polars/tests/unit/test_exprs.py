@@ -3,8 +3,11 @@ from __future__ import annotations
 import random
 import sys
 import typing
-from datetime import datetime, timedelta, timezone
-from typing import Any, cast
+from datetime import datetime
+from datetime import timedelta
+from datetime import timezone
+from typing import Any
+from typing import cast
 
 if sys.version_info >= (3, 9):
     from zoneinfo import ZoneInfo
@@ -17,15 +20,14 @@ import numpy as np
 import pytest
 
 import polars as pl
-from polars.datatypes import (
-    DATETIME_DTYPES,
-    DURATION_DTYPES,
-    FLOAT_DTYPES,
-    INTEGER_DTYPES,
-    NUMERIC_DTYPES,
-    TEMPORAL_DTYPES,
-)
-from polars.testing import assert_frame_equal, assert_series_equal
+from polars.datatypes import DATETIME_DTYPES
+from polars.datatypes import DURATION_DTYPES
+from polars.datatypes import FLOAT_DTYPES
+from polars.datatypes import INTEGER_DTYPES
+from polars.datatypes import NUMERIC_DTYPES
+from polars.datatypes import TEMPORAL_DTYPES
+from polars.testing import assert_frame_equal
+from polars.testing import assert_series_equal
 
 
 def test_col_select() -> None:

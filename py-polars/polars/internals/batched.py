@@ -2,25 +2,23 @@ from __future__ import annotations
 
 import contextlib
 from pathlib import Path
-from typing import TYPE_CHECKING, Sequence
+from typing import TYPE_CHECKING
+from typing import Sequence
 
 import polars.internals as pli
-from polars.datatypes import (
-    N_INFER_DEFAULT,
-    py_type_to_dtype,
-)
-from polars.utils.various import (
-    _prepare_row_count_args,
-    _process_null_values,
-    handle_projection_columns,
-    normalise_filepath,
-)
+from polars.datatypes import N_INFER_DEFAULT
+from polars.datatypes import py_type_to_dtype
+from polars.utils.various import _prepare_row_count_args
+from polars.utils.various import _process_null_values
+from polars.utils.various import handle_projection_columns
+from polars.utils.various import normalise_filepath
 
 with contextlib.suppress(ImportError):  # Module not available when building docs
     from polars.polars import PyBatchedCsv
 
 if TYPE_CHECKING:
-    from polars.datatypes import PolarsDataType, SchemaDict
+    from polars.datatypes import PolarsDataType
+    from polars.datatypes import SchemaDict
     from polars.internals.type_aliases import CsvEncoding
 
 

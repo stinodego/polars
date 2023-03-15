@@ -2,7 +2,8 @@ from __future__ import annotations
 
 import random
 import string
-from datetime import date, datetime
+from datetime import date
+from datetime import datetime
 from typing import Any
 
 import numpy as np

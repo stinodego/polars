@@ -9,7 +9,8 @@ import pandas as pd
 import pytest
 
 import polars as pl
-from polars.testing import assert_frame_equal, assert_series_equal
+from polars.testing import assert_frame_equal
+from polars.testing import assert_series_equal
 
 if TYPE_CHECKING:
     from polars.internals.type_aliases import JoinStrategy

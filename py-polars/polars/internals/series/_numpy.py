@@ -1,7 +1,8 @@
 from __future__ import annotations
 
 import ctypes
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING
+from typing import Any
 
 import numpy as np
 

@@ -2,26 +2,22 @@ from __future__ import annotations
 
 from io import BytesIO
 from pathlib import Path
-from typing import (
-    TYPE_CHECKING,
-    Any,
-    Dict,
-    Iterable,
-    Sequence,
-    Tuple,
-    Union,
-    overload,
-)
+from typing import TYPE_CHECKING
+from typing import Any
+from typing import Dict
+from typing import Iterable
+from typing import Sequence
+from typing import Tuple
+from typing import Union
+from typing import overload
 
 import polars.internals as pli
-from polars.datatypes import (
-    FLOAT_DTYPES,
-    INTEGER_DTYPES,
-    NUMERIC_DTYPES,
-    Date,
-    Datetime,
-    Time,
-)
+from polars.datatypes import FLOAT_DTYPES
+from polars.datatypes import INTEGER_DTYPES
+from polars.datatypes import NUMERIC_DTYPES
+from polars.datatypes import Date
+from polars.datatypes import Datetime
+from polars.datatypes import Time
 from polars.exceptions import DuplicateError
 
 
@@ -35,12 +31,15 @@ if TYPE_CHECKING:
     from xlsxwriter import Workbook
     from xlsxwriter.worksheet import Worksheet
 
-    from polars.datatypes import OneOrMoreDataTypes, PolarsDataType
+    from polars.datatypes import OneOrMoreDataTypes
+    from polars.datatypes import PolarsDataType
 
     if sys.version_info >= (3, 10):
-        from typing import Literal, TypeAlias
+        from typing import Literal
+        from typing import TypeAlias
     else:
-        from typing_extensions import Literal, TypeAlias
+        from typing_extensions import Literal
+        from typing_extensions import TypeAlias
 
 
 _XL_DEFAULT_FLOAT_FORMAT_ = "#,##0.{zeros};[Red]-#,##0.{zeros}"

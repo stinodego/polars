@@ -7,7 +7,8 @@ from pathlib import Path
 import pytest
 
 import polars as pl
-from polars.testing import assert_frame_equal, assert_frame_equal_local_categoricals
+from polars.testing import assert_frame_equal
+from polars.testing import assert_frame_equal_local_categoricals
 
 
 @pytest.mark.parametrize("buf", [io.BytesIO(), io.StringIO()])

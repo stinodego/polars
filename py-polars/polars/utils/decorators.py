@@ -3,7 +3,10 @@ from __future__ import annotations
 import functools
 import inspect
 import warnings
-from typing import TYPE_CHECKING, Any, Callable, TypeVar
+from typing import TYPE_CHECKING
+from typing import Any
+from typing import Callable
+from typing import TypeVar
 
 if TYPE_CHECKING:
     import sys

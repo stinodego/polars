@@ -1,14 +1,20 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Callable, Generic, Iterable, TypeVar
+from typing import TYPE_CHECKING
+from typing import Callable
+from typing import Generic
+from typing import Iterable
+from typing import TypeVar
 
 import polars.internals as pli
-from polars.internals import expr_to_lit_or_expr, selection_to_pyexpr_list
+from polars.internals import expr_to_lit_or_expr
+from polars.internals import selection_to_pyexpr_list
 from polars.utils.decorators import deprecated_alias
 
 if TYPE_CHECKING:
     from polars.datatypes import SchemaDict
-    from polars.internals.type_aliases import IntoExpr, RollingInterpolationMethod
+    from polars.internals.type_aliases import IntoExpr
+    from polars.internals.type_aliases import RollingInterpolationMethod
     from polars.polars import PyLazyGroupBy
 
 LDF = TypeVar("LDF", bound="pli.LazyFrame")

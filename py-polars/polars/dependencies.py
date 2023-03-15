@@ -6,7 +6,10 @@ from functools import lru_cache
 from importlib import import_module
 from importlib.util import find_spec
 from types import ModuleType
-from typing import TYPE_CHECKING, Any, Hashable, cast
+from typing import TYPE_CHECKING
+from typing import Any
+from typing import Hashable
+from typing import cast
 
 _FSSPEC_AVAILABLE = True
 _NUMPY_AVAILABLE = True

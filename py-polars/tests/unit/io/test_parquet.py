@@ -15,7 +15,8 @@ import pyarrow.parquet as pq
 import pytest
 
 import polars as pl
-from polars.testing import assert_frame_equal, assert_frame_equal_local_categoricals
+from polars.testing import assert_frame_equal
+from polars.testing import assert_frame_equal_local_categoricals
 
 if TYPE_CHECKING:
     from polars.internals.type_aliases import ParquetCompression

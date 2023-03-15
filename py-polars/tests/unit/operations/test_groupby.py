@@ -1,7 +1,8 @@
 from __future__ import annotations
 
 import sys
-from datetime import datetime, timedelta
+from datetime import datetime
+from datetime import timedelta
 from typing import Any
 
 import pytest
@@ -14,7 +15,8 @@ else:
     from backports.zoneinfo._zoneinfo import ZoneInfo
 
 import polars as pl
-from polars.testing import assert_frame_equal, assert_series_equal
+from polars.testing import assert_frame_equal
+from polars.testing import assert_series_equal
 
 
 def test_groupby() -> None:

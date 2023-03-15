@@ -1,20 +1,21 @@
 from __future__ import annotations
 
 import glob
-from contextlib import contextmanager, suppress
-from io import BytesIO, StringIO
+from contextlib import contextmanager
+from contextlib import suppress
+from io import BytesIO
+from io import StringIO
 from pathlib import Path
-from typing import (
-    TYPE_CHECKING,
-    Any,
-    BinaryIO,
-    ContextManager,
-    Iterator,
-    TextIO,
-    overload,
-)
+from typing import TYPE_CHECKING
+from typing import Any
+from typing import BinaryIO
+from typing import ContextManager
+from typing import Iterator
+from typing import TextIO
+from typing import overload
 
-from polars.dependencies import _FSSPEC_AVAILABLE, fsspec
+from polars.dependencies import _FSSPEC_AVAILABLE
+from polars.dependencies import fsspec
 from polars.exceptions import NoDataError
 from polars.utils.decorators import deprecated_alias
 from polars.utils.various import normalise_filepath

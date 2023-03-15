@@ -2,7 +2,11 @@ from __future__ import annotations
 
 import contextlib
 from inspect import isclass
-from typing import TYPE_CHECKING, Any, Iterator, Mapping, Sequence
+from typing import TYPE_CHECKING
+from typing import Any
+from typing import Iterator
+from typing import Mapping
+from typing import Sequence
 
 import polars.datatypes
 
@@ -11,7 +15,9 @@ with contextlib.suppress(ImportError):  # Module not available when building doc
 
 
 if TYPE_CHECKING:
-    from polars.datatypes.type_aliases import PolarsDataType, PythonDataType, SchemaDict
+    from polars.datatypes.type_aliases import PolarsDataType
+    from polars.datatypes.type_aliases import PythonDataType
+    from polars.datatypes.type_aliases import SchemaDict
     from polars.internals.type_aliases import TimeUnit
 
 

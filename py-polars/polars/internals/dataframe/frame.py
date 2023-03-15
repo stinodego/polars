@@ -7,95 +7,85 @@ import os
 import random
 import typing
 from collections.abc import Sized
-from io import BytesIO, StringIO
+from io import BytesIO
+from io import StringIO
 from pathlib import Path
-from typing import (
-    TYPE_CHECKING,
-    Any,
-    BinaryIO,
-    Callable,
-    Generator,
-    Iterable,
-    Iterator,
-    Mapping,
-    NoReturn,
-    Sequence,
-    TypeVar,
-    overload,
-)
+from typing import TYPE_CHECKING
+from typing import Any
+from typing import BinaryIO
+from typing import Callable
+from typing import Generator
+from typing import Iterable
+from typing import Iterator
+from typing import Mapping
+from typing import NoReturn
+from typing import Sequence
+from typing import TypeVar
+from typing import overload
 
 from polars import internals as pli
-from polars.datatypes import (
-    FLOAT_DTYPES,
-    INTEGER_DTYPES,
-    N_INFER_DEFAULT,
-    Boolean,
-    Categorical,
-    DataTypeClass,
-    Float64,
-    Int8,
-    Int16,
-    Int32,
-    Int64,
-    Object,
-    UInt8,
-    UInt16,
-    UInt32,
-    UInt64,
-    Utf8,
-    py_type_to_dtype,
-)
-from polars.dependencies import (
-    _PYARROW_AVAILABLE,
-    _check_for_numpy,
-    _check_for_pandas,
-    _check_for_pyarrow,
-)
+from polars.datatypes import FLOAT_DTYPES
+from polars.datatypes import INTEGER_DTYPES
+from polars.datatypes import N_INFER_DEFAULT
+from polars.datatypes import Boolean
+from polars.datatypes import Categorical
+from polars.datatypes import DataTypeClass
+from polars.datatypes import Float64
+from polars.datatypes import Int8
+from polars.datatypes import Int16
+from polars.datatypes import Int32
+from polars.datatypes import Int64
+from polars.datatypes import Object
+from polars.datatypes import UInt8
+from polars.datatypes import UInt16
+from polars.datatypes import UInt32
+from polars.datatypes import UInt64
+from polars.datatypes import Utf8
+from polars.datatypes import py_type_to_dtype
+from polars.dependencies import _PYARROW_AVAILABLE
+from polars.dependencies import _check_for_numpy
+from polars.dependencies import _check_for_pandas
+from polars.dependencies import _check_for_pyarrow
 from polars.dependencies import numpy as np
 from polars.dependencies import pandas as pd
 from polars.dependencies import pyarrow as pa
-from polars.exceptions import NoRowsReturned, TooManyRowsReturned
-from polars.internals.construction import (
-    _post_apply_columns,
-    arrow_to_pydf,
-    dict_to_pydf,
-    iterable_to_pydf,
-    numpy_to_pydf,
-    pandas_to_pydf,
-    sequence_to_pydf,
-    series_to_pydf,
-)
+from polars.exceptions import NoRowsReturned
+from polars.exceptions import TooManyRowsReturned
+from polars.internals.construction import _post_apply_columns
+from polars.internals.construction import arrow_to_pydf
+from polars.internals.construction import dict_to_pydf
+from polars.internals.construction import iterable_to_pydf
+from polars.internals.construction import numpy_to_pydf
+from polars.internals.construction import pandas_to_pydf
+from polars.internals.construction import sequence_to_pydf
+from polars.internals.construction import series_to_pydf
 from polars.internals.dataframe._html import NotebookFormatter
-from polars.internals.dataframe.groupby import DynamicGroupBy, GroupBy, RollingGroupBy
-from polars.internals.io_excel import (
-    _unpack_multi_column_dict,
-    _xl_apply_conditional_formats,
-    _xl_inject_sparklines,
-    _xl_setup_table_columns,
-    _xl_setup_table_options,
-    _xl_setup_workbook,
-    _xl_unique_table_name,
-)
+from polars.internals.dataframe.groupby import DynamicGroupBy
+from polars.internals.dataframe.groupby import GroupBy
+from polars.internals.dataframe.groupby import RollingGroupBy
+from polars.internals.io_excel import _unpack_multi_column_dict
+from polars.internals.io_excel import _xl_apply_conditional_formats
+from polars.internals.io_excel import _xl_inject_sparklines
+from polars.internals.io_excel import _xl_setup_table_columns
+from polars.internals.io_excel import _xl_setup_table_options
+from polars.internals.io_excel import _xl_setup_workbook
+from polars.internals.io_excel import _xl_unique_table_name
 from polars.internals.slice import PolarsSlice
 from polars.utils.convert import _timedelta_to_pl_duration
-from polars.utils.decorators import (
-    deprecate_nonkeyword_arguments,
-    deprecated_alias,
-    redirect,
-)
+from polars.utils.decorators import deprecate_nonkeyword_arguments
+from polars.utils.decorators import deprecated_alias
+from polars.utils.decorators import redirect
 from polars.utils.meta import get_index_type
-from polars.utils.various import (
-    _prepare_row_count_args,
-    _process_null_values,
-    handle_projection_columns,
-    is_bool_sequence,
-    is_int_sequence,
-    is_str_sequence,
-    normalise_filepath,
-    parse_version,
-    range_to_slice,
-    scale_bytes,
-)
+from polars.utils.various import _prepare_row_count_args
+from polars.utils.various import _process_null_values
+from polars.utils.various import handle_projection_columns
+from polars.utils.various import is_bool_sequence
+from polars.utils.various import is_int_sequence
+from polars.utils.various import is_str_sequence
+from polars.utils.various import normalise_filepath
+from polars.utils.various import parse_version
+from polars.utils.various import range_to_slice
+from polars.utils.various import scale_bytes
 
 with contextlib.suppress(ImportError):  # Module not available when building docs
     from polars.polars import PyDataFrame
@@ -109,37 +99,34 @@ if TYPE_CHECKING:
     from pyarrow.interchange.dataframe import _PyArrowDataFrame
     from xlsxwriter import Workbook
 
-    from polars.datatypes import (
-        OneOrMoreDataTypes,
-        PolarsDataType,
-        SchemaDefinition,
-        SchemaDict,
-    )
-    from polars.internals.io_excel import ColumnTotalsDefinition, ConditionalFormatDict
-    from polars.internals.type_aliases import (
-        AsofJoinStrategy,
-        AvroCompression,
-        ClosedInterval,
-        ComparisonOperator,
-        CsvEncoding,
-        DbWriteEngine,
-        DbWriteMode,
-        FillNullStrategy,
-        FrameInitTypes,
-        IntoExpr,
-        IpcCompression,
-        JoinStrategy,
-        NullStrategy,
-        Orientation,
-        ParallelStrategy,
-        ParquetCompression,
-        PivotAgg,
-        RollingInterpolationMethod,
-        SizeUnit,
-        StartBy,
-        UniqueKeepStrategy,
-        UnstackDirection,
-    )
+    from polars.datatypes import OneOrMoreDataTypes
+    from polars.datatypes import PolarsDataType
+    from polars.datatypes import SchemaDefinition
+    from polars.datatypes import SchemaDict
+    from polars.internals.io_excel import ColumnTotalsDefinition
+    from polars.internals.io_excel import ConditionalFormatDict
+    from polars.internals.type_aliases import AsofJoinStrategy
+    from polars.internals.type_aliases import AvroCompression
+    from polars.internals.type_aliases import ClosedInterval
+    from polars.internals.type_aliases import ComparisonOperator
+    from polars.internals.type_aliases import CsvEncoding
+    from polars.internals.type_aliases import DbWriteEngine
+    from polars.internals.type_aliases import DbWriteMode
+    from polars.internals.type_aliases import FillNullStrategy
+    from polars.internals.type_aliases import FrameInitTypes
+    from polars.internals.type_aliases import IntoExpr
+    from polars.internals.type_aliases import IpcCompression
+    from polars.internals.type_aliases import JoinStrategy
+    from polars.internals.type_aliases import NullStrategy
+    from polars.internals.type_aliases import Orientation
+    from polars.internals.type_aliases import ParallelStrategy
+    from polars.internals.type_aliases import ParquetCompression
+    from polars.internals.type_aliases import PivotAgg
+    from polars.internals.type_aliases import RollingInterpolationMethod
+    from polars.internals.type_aliases import SizeUnit
+    from polars.internals.type_aliases import StartBy
+    from polars.internals.type_aliases import UniqueKeepStrategy
+    from polars.internals.type_aliases import UnstackDirection
 
     if sys.version_info >= (3, 8):
         from typing import Literal
@@ -147,9 +134,13 @@ if TYPE_CHECKING:
         from typing_extensions import Literal
 
     if sys.version_info >= (3, 10):
-        from typing import Concatenate, ParamSpec, TypeAlias
+        from typing import Concatenate
+        from typing import ParamSpec
+        from typing import TypeAlias
     else:
-        from typing_extensions import Concatenate, ParamSpec, TypeAlias
+        from typing_extensions import Concatenate
+        from typing_extensions import ParamSpec
+        from typing_extensions import TypeAlias
 
     if sys.version_info >= (3, 11):
         from typing import Self

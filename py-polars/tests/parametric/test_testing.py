@@ -7,18 +7,18 @@ import warnings
 from typing import Any
 
 import pytest
-from hypothesis import given, settings
-from hypothesis.errors import InvalidArgument, NonInteractiveExampleWarning
+from hypothesis import given
+from hypothesis import settings
+from hypothesis.errors import InvalidArgument
+from hypothesis.errors import NonInteractiveExampleWarning
 from hypothesis.strategies import sampled_from
 
 import polars as pl
-from polars.testing.parametric import (
-    column,
-    columns,
-    dataframes,
-    series,
-    strategy_dtypes,
-)
+from polars.testing.parametric import column
+from polars.testing.parametric import columns
+from polars.testing.parametric import dataframes
+from polars.testing.parametric import series
+from polars.testing.parametric import strategy_dtypes
 
 # TODO: make dtype categories flexible and available from datatypes module
 TEMPORAL_DTYPES = [pl.Datetime, pl.Date, pl.Time, pl.Duration]

@@ -5,113 +5,103 @@ import math
 import os
 import typing
 import warnings
-from datetime import date, datetime, time, timedelta
-from typing import (
-    TYPE_CHECKING,
-    Any,
-    Callable,
-    Iterable,
-    NoReturn,
-    Sequence,
-    Union,
-    overload,
-)
+from datetime import date
+from datetime import datetime
+from datetime import time
+from datetime import timedelta
+from typing import TYPE_CHECKING
+from typing import Any
+from typing import Callable
+from typing import Iterable
+from typing import NoReturn
+from typing import Sequence
+from typing import Union
+from typing import overload
 
 from polars import internals as pli
-from polars.datatypes import (
-    Boolean,
-    Categorical,
-    Date,
-    Datetime,
-    Duration,
-    Float32,
-    Float64,
-    Int8,
-    Int16,
-    Int32,
-    Int64,
-    List,
-    Time,
-    UInt8,
-    UInt16,
-    UInt32,
-    UInt64,
-    Utf8,
-    dtype_to_ctype,
-    is_polars_dtype,
-    maybe_cast,
-    numpy_char_code_to_dtype,
-    py_type_to_dtype,
-    supported_numpy_char_code,
-)
-from polars.dependencies import (
-    _PYARROW_AVAILABLE,
-    _check_for_numpy,
-    _check_for_pandas,
-    _check_for_pyarrow,
-)
+from polars.datatypes import Boolean
+from polars.datatypes import Categorical
+from polars.datatypes import Date
+from polars.datatypes import Datetime
+from polars.datatypes import Duration
+from polars.datatypes import Float32
+from polars.datatypes import Float64
+from polars.datatypes import Int8
+from polars.datatypes import Int16
+from polars.datatypes import Int32
+from polars.datatypes import Int64
+from polars.datatypes import List
+from polars.datatypes import Time
+from polars.datatypes import UInt8
+from polars.datatypes import UInt16
+from polars.datatypes import UInt32
+from polars.datatypes import UInt64
+from polars.datatypes import Utf8
+from polars.datatypes import dtype_to_ctype
+from polars.datatypes import is_polars_dtype
+from polars.datatypes import maybe_cast
+from polars.datatypes import numpy_char_code_to_dtype
+from polars.datatypes import py_type_to_dtype
+from polars.datatypes import supported_numpy_char_code
+from polars.dependencies import _PYARROW_AVAILABLE
+from polars.dependencies import _check_for_numpy
+from polars.dependencies import _check_for_pandas
+from polars.dependencies import _check_for_pyarrow
 from polars.dependencies import numpy as np
 from polars.dependencies import pandas as pd
 from polars.dependencies import pyarrow as pa
 from polars.exceptions import ShapeError
-from polars.internals.construction import (
-    arrow_to_pyseries,
-    iterable_to_pyseries,
-    numpy_to_pyseries,
-    pandas_to_pyseries,
-    sequence_to_pyseries,
-    series_to_pyseries,
-)
+from polars.internals.construction import arrow_to_pyseries
+from polars.internals.construction import iterable_to_pyseries
+from polars.internals.construction import numpy_to_pyseries
+from polars.internals.construction import pandas_to_pyseries
+from polars.internals.construction import sequence_to_pyseries
+from polars.internals.construction import series_to_pyseries
 from polars.internals.series.binary import BinaryNameSpace
 from polars.internals.series.categorical import CatNameSpace
 from polars.internals.series.datetime import DateTimeNameSpace
 from polars.internals.series.list import ListNameSpace
 from polars.internals.series.string import StringNameSpace
 from polars.internals.series.struct import StructNameSpace
-from polars.internals.series.utils import expr_dispatch, get_ffi_func
+from polars.internals.series.utils import expr_dispatch
+from polars.internals.series.utils import get_ffi_func
 from polars.internals.slice import PolarsSlice
-from polars.utils.convert import (
-    _date_to_pl_date,
-    _datetime_to_pl_timestamp,
-    _time_to_pl_time,
-)
-from polars.utils.decorators import (
-    deprecate_nonkeyword_arguments,
-    deprecated_alias,
-    redirect,
-)
+from polars.utils.convert import _date_to_pl_date
+from polars.utils.convert import _datetime_to_pl_timestamp
+from polars.utils.convert import _time_to_pl_time
+from polars.utils.decorators import deprecate_nonkeyword_arguments
+from polars.utils.decorators import deprecated_alias
+from polars.utils.decorators import redirect
 from polars.utils.meta import get_index_type
-from polars.utils.various import (
-    _is_generator,
-    is_int_sequence,
-    range_to_series,
-    range_to_slice,
-    scale_bytes,
-    sphinx_accessor,
-)
+from polars.utils.various import _is_generator
+from polars.utils.various import is_int_sequence
+from polars.utils.various import range_to_series
+from polars.utils.various import range_to_slice
+from polars.utils.various import scale_bytes
+from polars.utils.various import sphinx_accessor
 
 with contextlib.suppress(ImportError):  # Module not available when building docs
-    from polars.polars import PyDataFrame, PySeries
+    from polars.polars import PyDataFrame
+    from polars.polars import PySeries
 
 
 if TYPE_CHECKING:
     import sys
 
-    from polars.datatypes import OneOrMoreDataTypes, PolarsDataType
+    from polars.datatypes import OneOrMoreDataTypes
+    from polars.datatypes import PolarsDataType
     from polars.internals.series._numpy import SeriesView
-    from polars.internals.type_aliases import (
-        ClosedInterval,
-        ComparisonOperator,
-        FillNullStrategy,
-        InterpolationMethod,
-        NullBehavior,
-        PythonLiteral,
-        RankMethod,
-        RollingInterpolationMethod,
-        SearchSortedSide,
-        SizeUnit,
-        TimeUnit,
-    )
+    from polars.internals.type_aliases import ClosedInterval
+    from polars.internals.type_aliases import ComparisonOperator
+    from polars.internals.type_aliases import FillNullStrategy
+    from polars.internals.type_aliases import InterpolationMethod
+    from polars.internals.type_aliases import NullBehavior
+    from polars.internals.type_aliases import PythonLiteral
+    from polars.internals.type_aliases import RankMethod
+    from polars.internals.type_aliases import RollingInterpolationMethod
+    from polars.internals.type_aliases import SearchSortedSide
+    from polars.internals.type_aliases import SizeUnit
+    from polars.internals.type_aliases import TimeUnit
 
     if sys.version_info >= (3, 11):
         from typing import Self
@@ -2994,7 +2984,8 @@ class Series:
         if not ignore_nulls:
             assert not self.has_validity()
 
-        from polars.internals.series._numpy import SeriesView, _ptr_to_numpy
+        from polars.internals.series._numpy import SeriesView
+        from polars.internals.series._numpy import _ptr_to_numpy
 
         ptr_type = dtype_to_ctype(self.dtype)
         ptr = self._s.as_single_ptr()

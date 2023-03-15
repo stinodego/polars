@@ -1,6 +1,8 @@
 from __future__ import annotations
 
-from datetime import date, datetime, time
+from datetime import date
+from datetime import datetime
+from datetime import time
 
 import pandas as pd
 import pytest

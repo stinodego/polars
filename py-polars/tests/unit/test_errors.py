@@ -2,7 +2,10 @@ from __future__ import annotations
 
 import io
 import typing
-from datetime import date, datetime, time, timedelta
+from datetime import date
+from datetime import datetime
+from datetime import time
+from datetime import timedelta
 
 import numpy as np
 import pytest

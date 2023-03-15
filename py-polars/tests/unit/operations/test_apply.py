@@ -1,9 +1,12 @@
 from __future__ import annotations
 
 import json
-from datetime import date, datetime, timedelta
+from datetime import date
+from datetime import datetime
+from datetime import timedelta
 from functools import reduce
-from typing import Sequence, no_type_check
+from typing import Sequence
+from typing import no_type_check
 
 import numpy as np
 

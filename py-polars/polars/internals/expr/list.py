@@ -1,15 +1,21 @@
 from __future__ import annotations
 
 import copy
-from typing import TYPE_CHECKING, Any, Callable
+from typing import TYPE_CHECKING
+from typing import Any
+from typing import Callable
 
 import polars.internals as pli
-from polars.utils.decorators import deprecate_nonkeyword_arguments, deprecated_alias
+from polars.utils.decorators import deprecate_nonkeyword_arguments
+from polars.utils.decorators import deprecated_alias
 
 if TYPE_CHECKING:
-    from datetime import date, datetime, time
+    from datetime import date
+    from datetime import datetime
+    from datetime import time
 
-    from polars.internals.type_aliases import NullBehavior, ToStructStrategy
+    from polars.internals.type_aliases import NullBehavior
+    from polars.internals.type_aliases import ToStructStrategy
 
 
 class ExprListNameSpace:

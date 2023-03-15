@@ -6,7 +6,8 @@ import numpy as np
 import pytest
 
 import polars as pl
-from polars.testing import assert_frame_equal, assert_series_equal
+from polars.testing import assert_frame_equal
+from polars.testing import assert_series_equal
 
 
 def test_streaming_groupby_types() -> None:

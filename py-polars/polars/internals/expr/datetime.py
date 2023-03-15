@@ -4,14 +4,18 @@ from datetime import time
 from typing import TYPE_CHECKING
 
 import polars.internals as pli
-from polars.datatypes import DTYPE_TEMPORAL_UNITS, Date, Int32
+from polars.datatypes import DTYPE_TEMPORAL_UNITS
+from polars.datatypes import Date
+from polars.datatypes import Int32
 from polars.utils.convert import _timedelta_to_pl_duration
-from polars.utils.decorators import deprecated_alias, redirect
+from polars.utils.decorators import deprecated_alias
+from polars.utils.decorators import redirect
 
 if TYPE_CHECKING:
     from datetime import timedelta
 
-    from polars.internals.type_aliases import EpochTimeUnit, TimeUnit
+    from polars.internals.type_aliases import EpochTimeUnit
+    from polars.internals.type_aliases import TimeUnit
 
 
 @redirect(

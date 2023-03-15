@@ -1,27 +1,24 @@
 from __future__ import annotations
 
-from typing import (
-    TYPE_CHECKING,
-    Callable,
-    Generic,
-    Iterable,
-    Iterator,
-    TypeVar,
-)
+from typing import TYPE_CHECKING
+from typing import Callable
+from typing import Generic
+from typing import Iterable
+from typing import Iterator
+from typing import TypeVar
 
 import polars.internals as pli
 from polars.utils.convert import _timedelta_to_pl_duration
-from polars.utils.decorators import deprecated_alias, redirect
+from polars.utils.decorators import deprecated_alias
+from polars.utils.decorators import redirect
 
 if TYPE_CHECKING:
     from datetime import timedelta
 
-    from polars.internals.type_aliases import (
-        ClosedInterval,
-        IntoExpr,
-        RollingInterpolationMethod,
-        StartBy,
-    )
+    from polars.internals.type_aliases import ClosedInterval
+    from polars.internals.type_aliases import IntoExpr
+    from polars.internals.type_aliases import RollingInterpolationMethod
+    from polars.internals.type_aliases import StartBy
 
 # A type variable used to refer to a polars.DataFrame or any subclass of it
 DF = TypeVar("DF", bound="pli.DataFrame")

@@ -2,12 +2,22 @@ from __future__ import annotations
 
 import functools
 import sys
-from datetime import datetime, time, timedelta, timezone
+from datetime import datetime
+from datetime import time
+from datetime import timedelta
+from datetime import timezone
 from decimal import Context
-from typing import TYPE_CHECKING, Any, Callable, Sequence, TypeVar, overload
+from typing import TYPE_CHECKING
+from typing import Any
+from typing import Callable
+from typing import Sequence
+from typing import TypeVar
+from typing import overload
 
-from polars.datatypes import Date, Datetime
-from polars.dependencies import _ZONEINFO_AVAILABLE, zoneinfo
+from polars.datatypes import Date
+from polars.datatypes import Datetime
+from polars.dependencies import _ZONEINFO_AVAILABLE
+from polars.dependencies import zoneinfo
 
 # This code block is due to a typing issue with backports.zoneinfo package:
 # https://github.com/pganssle/zoneinfo/issues/125
@@ -24,7 +34,8 @@ if sys.version_info >= (3, 11):
 
 if TYPE_CHECKING:
     from collections.abc import Reversible
-    from datetime import date, tzinfo
+    from datetime import date
+    from datetime import tzinfo
     from decimal import Decimal
 
     from polars.datatypes import PolarsDataType

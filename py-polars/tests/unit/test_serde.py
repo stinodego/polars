@@ -1,7 +1,8 @@
 from __future__ import annotations
 
 import pickle
-from datetime import datetime, timedelta
+from datetime import datetime
+from datetime import timedelta
 
 import polars as pl
 from polars.testing import assert_series_equal

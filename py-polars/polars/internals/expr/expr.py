@@ -5,25 +5,24 @@ import math
 import os
 import random
 import warnings
-from datetime import date, datetime, time, timedelta
-from typing import (
-    TYPE_CHECKING,
-    Any,
-    Callable,
-    Iterable,
-    NoReturn,
-    Sequence,
-    TypeVar,
-    cast,
-)
+from datetime import date
+from datetime import datetime
+from datetime import time
+from datetime import timedelta
+from typing import TYPE_CHECKING
+from typing import Any
+from typing import Callable
+from typing import Iterable
+from typing import NoReturn
+from typing import Sequence
+from typing import TypeVar
+from typing import cast
 
 from polars import internals as pli
-from polars.datatypes import (
-    Struct,
-    UInt32,
-    is_polars_dtype,
-    py_type_to_dtype,
-)
+from polars.datatypes import Struct
+from polars.datatypes import UInt32
+from polars.datatypes import is_polars_dtype
+from polars.datatypes import py_type_to_dtype
 from polars.dependencies import _check_for_numpy
 from polars.dependencies import numpy as np
 from polars.internals.expr.binary import ExprBinaryNameSpace
@@ -34,7 +33,8 @@ from polars.internals.expr.meta import ExprMetaNameSpace
 from polars.internals.expr.string import ExprStringNameSpace
 from polars.internals.expr.struct import ExprStructNameSpace
 from polars.utils.convert import _timedelta_to_pl_duration
-from polars.utils.decorators import deprecate_nonkeyword_arguments, deprecated_alias
+from polars.utils.decorators import deprecate_nonkeyword_arguments
+from polars.utils.decorators import deprecated_alias
 from polars.utils.meta import threadpool_size
 from polars.utils.various import sphinx_accessor
 
@@ -45,24 +45,26 @@ if TYPE_CHECKING:
     import sys
 
     from polars.datatypes import PolarsDataType
-    from polars.internals.type_aliases import (
-        ApplyStrategy,
-        ClosedInterval,
-        FillNullStrategy,
-        InterpolationMethod,
-        IntoExpr,
-        NullBehavior,
-        PythonLiteral,
-        RankMethod,
-        RollingInterpolationMethod,
-        SearchSortedSide,
-    )
+    from polars.internals.type_aliases import ApplyStrategy
+    from polars.internals.type_aliases import ClosedInterval
+    from polars.internals.type_aliases import FillNullStrategy
+    from polars.internals.type_aliases import InterpolationMethod
+    from polars.internals.type_aliases import IntoExpr
+    from polars.internals.type_aliases import NullBehavior
+    from polars.internals.type_aliases import PythonLiteral
+    from polars.internals.type_aliases import RankMethod
+    from polars.internals.type_aliases import RollingInterpolationMethod
+    from polars.internals.type_aliases import SearchSortedSide
     from polars.polars import PyExpr
 
     if sys.version_info >= (3, 11):
-        from typing import Concatenate, ParamSpec, Self
+        from typing import Concatenate
+        from typing import ParamSpec
+        from typing import Self
     else:
-        from typing_extensions import Concatenate, ParamSpec, Self
+        from typing_extensions import Concatenate
+        from typing_extensions import ParamSpec
+        from typing_extensions import Self
 
     T = TypeVar("T")
     P = ParamSpec("P")

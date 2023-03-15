@@ -4,16 +4,16 @@ import textwrap
 from typing import Any
 
 import polars.internals as pli
-from polars.datatypes import (
-    Boolean,
-    Categorical,
-    DataTypeClass,
-    Float32,
-    Float64,
-    dtype_to_py_type,
-)
-from polars.exceptions import ComputeError, InvalidAssert
-from polars.utils.decorators import deprecate_nonkeyword_arguments, deprecated_alias
+from polars.datatypes import Boolean
+from polars.datatypes import Categorical
+from polars.datatypes import DataTypeClass
+from polars.datatypes import Float32
+from polars.datatypes import Float64
+from polars.datatypes import dtype_to_py_type
+from polars.exceptions import ComputeError
+from polars.exceptions import InvalidAssert
+from polars.utils.decorators import deprecate_nonkeyword_arguments
+from polars.utils.decorators import deprecated_alias
 
 
 @deprecate_nonkeyword_arguments()

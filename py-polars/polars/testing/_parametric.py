@@ -4,57 +4,59 @@ import os
 import random
 import warnings
 from dataclasses import dataclass
-from datetime import datetime, timedelta
+from datetime import datetime
+from datetime import timedelta
 from math import isfinite
-from typing import TYPE_CHECKING, Any, Sequence
+from typing import TYPE_CHECKING
+from typing import Any
+from typing import Sequence
 
 from hypothesis import settings
-from hypothesis.errors import InvalidArgument, NonInteractiveExampleWarning
-from hypothesis.strategies import (
-    booleans,
-    composite,
-    dates,
-    datetimes,
-    floats,
-    from_type,
-    integers,
-    lists,
-    sampled_from,
-    text,
-    timedeltas,
-    times,
-)
+from hypothesis.errors import InvalidArgument
+from hypothesis.errors import NonInteractiveExampleWarning
+from hypothesis.strategies import booleans
+from hypothesis.strategies import composite
+from hypothesis.strategies import dates
+from hypothesis.strategies import datetimes
+from hypothesis.strategies import floats
+from hypothesis.strategies import from_type
+from hypothesis.strategies import integers
+from hypothesis.strategies import lists
+from hypothesis.strategies import sampled_from
+from hypothesis.strategies import text
+from hypothesis.strategies import timedeltas
+from hypothesis.strategies import times
 from hypothesis.strategies._internal.utils import defines_strategy
 
 import polars.internals as pli
-from polars.datatypes import (
-    Boolean,
-    Categorical,
-    Date,
-    Datetime,
-    Duration,
-    Float32,
-    Float64,
-    Int8,
-    Int16,
-    Int32,
-    Int64,
-    Time,
-    UInt8,
-    UInt16,
-    UInt32,
-    UInt64,
-    Utf8,
-    is_polars_dtype,
-    py_type_to_dtype,
-)
+from polars.datatypes import Boolean
+from polars.datatypes import Categorical
+from polars.datatypes import Date
+from polars.datatypes import Datetime
+from polars.datatypes import Duration
+from polars.datatypes import Float32
+from polars.datatypes import Float64
+from polars.datatypes import Int8
+from polars.datatypes import Int16
+from polars.datatypes import Int32
+from polars.datatypes import Int64
+from polars.datatypes import Time
+from polars.datatypes import UInt8
+from polars.datatypes import UInt16
+from polars.datatypes import UInt32
+from polars.datatypes import UInt64
+from polars.datatypes import Utf8
+from polars.datatypes import is_polars_dtype
+from polars.datatypes import py_type_to_dtype
 from polars.string_cache import StringCache
 from polars.testing.asserts import is_categorical_dtype
 
 if TYPE_CHECKING:
-    from hypothesis.strategies import DrawFn, SearchStrategy
+    from hypothesis.strategies import DrawFn
+    from hypothesis.strategies import SearchStrategy
 
-    from polars.datatypes import OneOrMoreDataTypes, PolarsDataType
+    from polars.datatypes import OneOrMoreDataTypes
+    from polars.datatypes import PolarsDataType
 
 
 # Default profile (eg: running locally)

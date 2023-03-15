@@ -1,13 +1,15 @@
 from __future__ import annotations
 
 import typing
-from datetime import date, datetime
+from datetime import date
+from datetime import datetime
 
 import numpy as np
 import pytest
 
 import polars as pl
-from polars.testing import assert_frame_equal, assert_series_equal
+from polars.testing import assert_frame_equal
+from polars.testing import assert_series_equal
 
 
 def test_list_arr_get() -> None:

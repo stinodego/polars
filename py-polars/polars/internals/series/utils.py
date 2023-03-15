@@ -3,7 +3,10 @@ from __future__ import annotations
 import inspect
 import sys
 from functools import wraps
-from typing import TYPE_CHECKING, Any, Callable, TypeVar
+from typing import TYPE_CHECKING
+from typing import Any
+from typing import Callable
+from typing import TypeVar
 
 import polars.internals as pli
 from polars.datatypes import dtype_to_ffiname

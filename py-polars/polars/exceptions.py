@@ -1,17 +1,15 @@
 try:
-    from polars.polars import (
-        ArrowError,
-        ColumnNotFoundError,
-        ComputeError,
-        DuplicateError,
-        InvalidOperationError,
-        NoDataError,
-        PanicException,
-        SchemaError,
-        SchemaFieldNotFoundError,
-        ShapeError,
-        StructFieldNotFoundError,
-    )
+    from polars.polars import ArrowError
+    from polars.polars import ColumnNotFoundError
+    from polars.polars import ComputeError
+    from polars.polars import DuplicateError
+    from polars.polars import InvalidOperationError
+    from polars.polars import NoDataError
+    from polars.polars import PanicException
+    from polars.polars import SchemaError
+    from polars.polars import SchemaFieldNotFoundError
+    from polars.polars import ShapeError
+    from polars.polars import StructFieldNotFoundError
 except ImportError:
     # They are only redefined for documentation purposes
     # when there is no binary yet

@@ -35,7 +35,9 @@ import sys
 import unittest
 from pathlib import Path
 from tempfile import TemporaryDirectory
-from typing import TYPE_CHECKING, Any, Iterator
+from typing import TYPE_CHECKING
+from typing import Any
+from typing import Iterator
 
 import polars
 

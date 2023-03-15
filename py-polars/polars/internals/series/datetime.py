@@ -5,12 +5,17 @@ from typing import TYPE_CHECKING
 import polars.internals as pli
 from polars.internals.series.utils import expr_dispatch
 from polars.utils.convert import _to_python_datetime
-from polars.utils.decorators import deprecated_alias, redirect
+from polars.utils.decorators import deprecated_alias
+from polars.utils.decorators import redirect
 
 if TYPE_CHECKING:
-    from datetime import date, datetime, time, timedelta
+    from datetime import date
+    from datetime import datetime
+    from datetime import time
+    from datetime import timedelta
 
-    from polars.internals.type_aliases import EpochTimeUnit, TimeUnit
+    from polars.internals.type_aliases import EpochTimeUnit
+    from polars.internals.type_aliases import TimeUnit
     from polars.polars import PySeries
 
 

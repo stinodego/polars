@@ -5,58 +5,54 @@ import os
 import subprocess
 import typing
 import warnings
-from datetime import date, datetime, time, timedelta
-from io import BytesIO, StringIO
+from datetime import date
+from datetime import datetime
+from datetime import time
+from datetime import timedelta
+from io import BytesIO
+from io import StringIO
 from pathlib import Path
-from typing import (
-    TYPE_CHECKING,
-    Any,
-    Callable,
-    Iterable,
-    NoReturn,
-    Sequence,
-    TypeVar,
-    overload,
-)
+from typing import TYPE_CHECKING
+from typing import Any
+from typing import Callable
+from typing import Iterable
+from typing import NoReturn
+from typing import Sequence
+from typing import TypeVar
+from typing import overload
 
 from polars import internals as pli
-from polars.datatypes import (
-    DTYPE_TEMPORAL_UNITS,
-    N_INFER_DEFAULT,
-    Boolean,
-    Categorical,
-    Date,
-    Datetime,
-    Duration,
-    Float32,
-    Float64,
-    Int8,
-    Int16,
-    Int32,
-    Int64,
-    Time,
-    UInt8,
-    UInt16,
-    UInt32,
-    UInt64,
-    Utf8,
-    py_type_to_dtype,
-)
+from polars.datatypes import DTYPE_TEMPORAL_UNITS
+from polars.datatypes import N_INFER_DEFAULT
+from polars.datatypes import Boolean
+from polars.datatypes import Categorical
+from polars.datatypes import Date
+from polars.datatypes import Datetime
+from polars.datatypes import Duration
+from polars.datatypes import Float32
+from polars.datatypes import Float64
+from polars.datatypes import Int8
+from polars.datatypes import Int16
+from polars.datatypes import Int32
+from polars.datatypes import Int64
+from polars.datatypes import Time
+from polars.datatypes import UInt8
+from polars.datatypes import UInt16
+from polars.datatypes import UInt32
+from polars.datatypes import UInt64
+from polars.datatypes import Utf8
+from polars.datatypes import py_type_to_dtype
 from polars.internals import selection_to_pyexpr_list
 from polars.internals.lazyframe.groupby import LazyGroupBy
 from polars.internals.slice import LazyPolarsSlice
 from polars.utils.convert import _timedelta_to_pl_duration
-from polars.utils.decorators import (
-    deprecate_nonkeyword_arguments,
-    deprecated_alias,
-    redirect,
-)
-from polars.utils.various import (
-    _in_notebook,
-    _prepare_row_count_args,
-    _process_null_values,
-    normalise_filepath,
-)
+from polars.utils.decorators import deprecate_nonkeyword_arguments
+from polars.utils.decorators import deprecated_alias
+from polars.utils.decorators import redirect
+from polars.utils.various import _in_notebook
+from polars.utils.various import _prepare_row_count_args
+from polars.utils.various import _process_null_values
+from polars.utils.various import normalise_filepath
 
 with contextlib.suppress(ImportError):  # Module not available when building docs
     from polars.polars import PyLazyFrame
@@ -68,28 +64,30 @@ if TYPE_CHECKING:
 
     import pyarrow as pa
 
-    from polars.datatypes import PolarsDataType, SchemaDefinition, SchemaDict
-    from polars.internals.type_aliases import (
-        AsofJoinStrategy,
-        ClosedInterval,
-        CsvEncoding,
-        FillNullStrategy,
-        FrameInitTypes,
-        IntoExpr,
-        JoinStrategy,
-        Orientation,
-        ParallelStrategy,
-        PolarsExprType,
-        PythonLiteral,
-        RollingInterpolationMethod,
-        StartBy,
-        UniqueKeepStrategy,
-    )
+    from polars.datatypes import PolarsDataType
+    from polars.datatypes import SchemaDefinition
+    from polars.datatypes import SchemaDict
+    from polars.internals.type_aliases import AsofJoinStrategy
+    from polars.internals.type_aliases import ClosedInterval
+    from polars.internals.type_aliases import CsvEncoding
+    from polars.internals.type_aliases import FillNullStrategy
+    from polars.internals.type_aliases import FrameInitTypes
+    from polars.internals.type_aliases import IntoExpr
+    from polars.internals.type_aliases import JoinStrategy
+    from polars.internals.type_aliases import Orientation
+    from polars.internals.type_aliases import ParallelStrategy
+    from polars.internals.type_aliases import PolarsExprType
+    from polars.internals.type_aliases import PythonLiteral
+    from polars.internals.type_aliases import RollingInterpolationMethod
+    from polars.internals.type_aliases import StartBy
+    from polars.internals.type_aliases import UniqueKeepStrategy
 
     if sys.version_info >= (3, 10):
-        from typing import Concatenate, ParamSpec
+        from typing import Concatenate
+        from typing import ParamSpec
     else:
-        from typing_extensions import Concatenate, ParamSpec
+        from typing_extensions import Concatenate
+        from typing_extensions import ParamSpec
 
     if sys.version_info >= (3, 11):
         from typing import Self
@@ -1067,7 +1065,8 @@ naive plan: (run LazyFrame.explain(optimized=True) to see the optimized plan)
             return None
 
         if _in_notebook():
-            from IPython.display import SVG, display
+            from IPython.display import SVG
+            from IPython.display import display
 
             return display(SVG(graph))
         else:

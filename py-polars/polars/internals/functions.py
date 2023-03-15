@@ -2,13 +2,19 @@ from __future__ import annotations
 
 import contextlib
 import warnings
-from datetime import datetime, timedelta
-from typing import TYPE_CHECKING, Iterable, Sequence, overload
+from datetime import datetime
+from datetime import timedelta
+from typing import TYPE_CHECKING
+from typing import Iterable
+from typing import Sequence
+from typing import overload
 
 from polars import internals as pli
 from polars.datatypes import Date
-from polars.utils.convert import _datetime_to_pl_timestamp, _timedelta_to_pl_duration
-from polars.utils.decorators import deprecate_nonkeyword_arguments, deprecated_alias
+from polars.utils.convert import _datetime_to_pl_timestamp
+from polars.utils.convert import _timedelta_to_pl_duration
+from polars.utils.decorators import deprecate_nonkeyword_arguments
+from polars.utils.decorators import deprecated_alias
 
 with contextlib.suppress(ImportError):  # Module not available when building docs
     from polars.polars import concat_df as _concat_df
@@ -26,7 +32,9 @@ if TYPE_CHECKING:
     from datetime import date
 
     from polars.datatypes import PolarsDataType
-    from polars.internals.type_aliases import ClosedInterval, ConcatMethod, TimeUnit
+    from polars.internals.type_aliases import ClosedInterval
+    from polars.internals.type_aliases import ConcatMethod
+    from polars.internals.type_aliases import TimeUnit
 
     if sys.version_info >= (3, 8):
         from typing import Literal

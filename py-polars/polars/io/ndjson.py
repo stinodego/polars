@@ -4,8 +4,10 @@ from pathlib import Path
 from typing import TYPE_CHECKING
 
 from polars.datatypes import N_INFER_DEFAULT
-from polars.internals import DataFrame, LazyFrame
-from polars.utils.decorators import deprecate_nonkeyword_arguments, deprecated_alias
+from polars.internals import DataFrame
+from polars.internals import LazyFrame
+from polars.utils.decorators import deprecate_nonkeyword_arguments
+from polars.utils.decorators import deprecated_alias
 from polars.utils.various import normalise_filepath
 
 if TYPE_CHECKING:

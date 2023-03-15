@@ -6,7 +6,8 @@ import pyarrow.fs
 import pytest
 
 import polars as pl
-from polars.testing import assert_frame_equal, assert_frame_not_equal
+from polars.testing import assert_frame_equal
+from polars.testing import assert_frame_not_equal
 
 if TYPE_CHECKING:
     from pathlib import Path

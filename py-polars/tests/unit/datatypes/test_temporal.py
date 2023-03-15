@@ -2,8 +2,14 @@ from __future__ import annotations
 
 import io
 import sys
-from datetime import date, datetime, time, timedelta, timezone
-from typing import TYPE_CHECKING, cast, no_type_check
+from datetime import date
+from datetime import datetime
+from datetime import time
+from datetime import timedelta
+from datetime import timezone
+from typing import TYPE_CHECKING
+from typing import cast
+from typing import no_type_check
 
 import numpy as np
 import pandas as pd
@@ -11,13 +17,14 @@ import pyarrow as pa
 import pytest
 
 import polars as pl
-from polars.datatypes import DATETIME_DTYPES, DTYPE_TEMPORAL_UNITS, TEMPORAL_DTYPES
-from polars.exceptions import ComputeError, PanicException
-from polars.testing import (
-    assert_frame_equal,
-    assert_series_equal,
-    assert_series_not_equal,
-)
+from polars.datatypes import DATETIME_DTYPES
+from polars.datatypes import DTYPE_TEMPORAL_UNITS
+from polars.datatypes import TEMPORAL_DTYPES
+from polars.exceptions import ComputeError
+from polars.exceptions import PanicException
+from polars.testing import assert_frame_equal
+from polars.testing import assert_series_equal
+from polars.testing import assert_series_not_equal
 
 if TYPE_CHECKING:
     from polars.datatypes import PolarsTemporalType

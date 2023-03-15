@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import typing
-from datetime import date, datetime, timezone
+from datetime import date
+from datetime import datetime
+from datetime import timezone
 from decimal import Decimal
 from random import shuffle
 from typing import Any
@@ -12,7 +14,8 @@ import pyarrow as pa
 import pytest
 
 import polars as pl
-from polars.testing import assert_frame_equal, assert_series_equal
+from polars.testing import assert_frame_equal
+from polars.testing import assert_series_equal
 
 
 def test_init_dict() -> None:

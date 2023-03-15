@@ -7,7 +7,11 @@ import tempfile
 import textwrap
 import typing
 import zlib
-from datetime import date, datetime, time, timedelta, timezone
+from datetime import date
+from datetime import datetime
+from datetime import time
+from datetime import timedelta
+from datetime import timezone
 from pathlib import Path
 from typing import TYPE_CHECKING
 
@@ -15,12 +19,11 @@ import numpy as np
 import pytest
 
 import polars as pl
-from polars.exceptions import ComputeError, NoDataError
-from polars.testing import (
-    assert_frame_equal,
-    assert_frame_equal_local_categoricals,
-    assert_series_equal,
-)
+from polars.exceptions import ComputeError
+from polars.exceptions import NoDataError
+from polars.testing import assert_frame_equal
+from polars.testing import assert_frame_equal_local_categoricals
+from polars.testing import assert_series_equal
 from polars.utils.various import normalise_filepath
 
 if TYPE_CHECKING:

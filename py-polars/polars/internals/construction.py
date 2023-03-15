@@ -1,65 +1,68 @@
 from __future__ import annotations
 
 import contextlib
-from dataclasses import astuple, is_dataclass
-from datetime import date, datetime, time, timedelta
+from dataclasses import astuple
+from dataclasses import is_dataclass
+from datetime import date
+from datetime import datetime
+from datetime import time
+from datetime import timedelta
 from decimal import Decimal as PyDecimal
 from functools import singledispatch
-from itertools import islice, zip_longest
+from itertools import islice
+from itertools import zip_longest
 from sys import version_info
-from typing import (
-    TYPE_CHECKING,
-    Any,
-    Generator,
-    Iterable,
-    Mapping,
-    MutableMapping,
-    Sequence,
-    get_type_hints,
-)
+from typing import TYPE_CHECKING
+from typing import Any
+from typing import Generator
+from typing import Iterable
+from typing import Mapping
+from typing import MutableMapping
+from typing import Sequence
+from typing import get_type_hints
 
 from polars import internals as pli
-from polars.datatypes import (
-    N_INFER_DEFAULT,
-    Categorical,
-    Date,
-    Datetime,
-    Duration,
-    Float32,
-    List,
-    Object,
-    Struct,
-    Time,
-    Unknown,
-    Utf8,
-    dtype_to_py_type,
-    is_polars_dtype,
-    py_type_to_dtype,
-)
-from polars.datatypes.constructor import (
-    numpy_type_to_constructor,
-    numpy_values_and_dtype,
-    polars_type_to_constructor,
-    py_type_to_constructor,
-)
-from polars.dependencies import (
-    _NUMPY_AVAILABLE,
-    _PANDAS_AVAILABLE,
-    _check_for_numpy,
-)
+from polars.datatypes import N_INFER_DEFAULT
+from polars.datatypes import Categorical
+from polars.datatypes import Date
+from polars.datatypes import Datetime
+from polars.datatypes import Duration
+from polars.datatypes import Float32
+from polars.datatypes import List
+from polars.datatypes import Object
+from polars.datatypes import Struct
+from polars.datatypes import Time
+from polars.datatypes import Unknown
+from polars.datatypes import Utf8
+from polars.datatypes import dtype_to_py_type
+from polars.datatypes import is_polars_dtype
+from polars.datatypes import py_type_to_dtype
+from polars.datatypes.constructor import numpy_type_to_constructor
+from polars.datatypes.constructor import numpy_values_and_dtype
+from polars.datatypes.constructor import polars_type_to_constructor
+from polars.datatypes.constructor import py_type_to_constructor
+from polars.dependencies import _NUMPY_AVAILABLE
+from polars.dependencies import _PANDAS_AVAILABLE
+from polars.dependencies import _check_for_numpy
 from polars.dependencies import numpy as np
 from polars.dependencies import pandas as pd
 from polars.dependencies import pyarrow as pa
-from polars.exceptions import ComputeError, ShapeError
+from polars.exceptions import ComputeError
+from polars.exceptions import ShapeError
 from polars.utils.decorators import deprecated_alias
 from polars.utils.meta import threadpool_size
-from polars.utils.various import _is_generator, arrlen, range_to_series
+from polars.utils.various import _is_generator
+from polars.utils.various import arrlen
+from polars.utils.various import range_to_series
 
 with contextlib.suppress(ImportError):  # Module not available when building docs
-    from polars.polars import PyDataFrame, PySeries
+    from polars.polars import PyDataFrame
+    from polars.polars import PySeries
 
 if TYPE_CHECKING:
-    from polars.datatypes import PolarsDataType, SchemaDefinition, SchemaDict
+    from polars.datatypes import PolarsDataType
+    from polars.datatypes import SchemaDefinition
+    from polars.datatypes import SchemaDict
     from polars.internals.type_aliases import Orientation
 
 if version_info >= (3, 10):

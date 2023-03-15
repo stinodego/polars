@@ -6,7 +6,10 @@ This method gets its own module due to its complexity.
 from __future__ import annotations
 
 import sys
-from datetime import date, datetime, timedelta, timezone
+from datetime import date
+from datetime import datetime
+from datetime import timedelta
+from datetime import timezone
 from typing import TYPE_CHECKING
 
 import pytest

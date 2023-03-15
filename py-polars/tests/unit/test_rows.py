@@ -1,7 +1,8 @@
 import pytest
 
 import polars as pl
-from polars.exceptions import NoRowsReturned, TooManyRowsReturned
+from polars.exceptions import NoRowsReturned
+from polars.exceptions import TooManyRowsReturned
 
 
 def test_row_tuple() -> None:

@@ -4,47 +4,46 @@ import ctypes
 import functools
 import re
 import sys
-from datetime import date, datetime, time, timedelta
+from datetime import date
+from datetime import datetime
+from datetime import time
+from datetime import timedelta
 from decimal import Decimal as PyDecimal
-from typing import (
-    TYPE_CHECKING,
-    Any,
-    Callable,
-    ForwardRef,
-    Optional,
-    TypeVar,
-    Union,
-    overload,
-)
+from typing import TYPE_CHECKING
+from typing import Any
+from typing import Callable
+from typing import ForwardRef
+from typing import Optional
+from typing import TypeVar
+from typing import Union
+from typing import overload
 
-from polars.datatypes import (
-    Binary,
-    Boolean,
-    Categorical,
-    DataType,
-    DataTypeClass,
-    Date,
-    Datetime,
-    Decimal,
-    Duration,
-    Float32,
-    Float64,
-    Int8,
-    Int16,
-    Int32,
-    Int64,
-    List,
-    Null,
-    Object,
-    Struct,
-    Time,
-    UInt8,
-    UInt16,
-    UInt32,
-    UInt64,
-    Unknown,
-    Utf8,
-)
+from polars.datatypes import Binary
+from polars.datatypes import Boolean
+from polars.datatypes import Categorical
+from polars.datatypes import DataType
+from polars.datatypes import DataTypeClass
+from polars.datatypes import Date
+from polars.datatypes import Datetime
+from polars.datatypes import Decimal
+from polars.datatypes import Duration
+from polars.datatypes import Float32
+from polars.datatypes import Float64
+from polars.datatypes import Int8
+from polars.datatypes import Int16
+from polars.datatypes import Int32
+from polars.datatypes import Int64
+from polars.datatypes import List
+from polars.datatypes import Null
+from polars.datatypes import Object
+from polars.datatypes import Struct
+from polars.datatypes import Time
+from polars.datatypes import UInt8
+from polars.datatypes import UInt16
+from polars.datatypes import UInt32
+from polars.datatypes import UInt64
+from polars.datatypes import Unknown
+from polars.datatypes import Utf8
 from polars.dependencies import numpy as np
 from polars.dependencies import pyarrow as pa
 
@@ -59,14 +58,17 @@ else:
 
 OptionType = type(Optional[type])
 if sys.version_info >= (3, 10):
-    from types import NoneType, UnionType
+    from types import NoneType
+    from types import UnionType
 else:
     # infer equivalent class
     NoneType = type(None)
     UnionType = type(Union[int, float])
 
 if TYPE_CHECKING:
-    from polars.datatypes.type_aliases import PolarsDataType, PythonDataType, SchemaDict
+    from polars.datatypes.type_aliases import PolarsDataType
+    from polars.datatypes.type_aliases import PythonDataType
+    from polars.datatypes.type_aliases import SchemaDict
     from polars.internals.type_aliases import TimeUnit
 
     if sys.version_info >= (3, 8):
@@ -398,10 +400,8 @@ def maybe_cast(
 ) -> Any:
     """Try casting a value to a value that is valid for the given Polars dtype."""
     # cast el if it doesn't match
-    from polars.utils.convert import (
-        _datetime_to_pl_timestamp,
-        _timedelta_to_pl_timedelta,
-    )
+    from polars.utils.convert import _datetime_to_pl_timestamp
+    from polars.utils.convert import _timedelta_to_pl_timedelta
 
     if isinstance(el, datetime):
         return _datetime_to_pl_timestamp(el, time_unit)

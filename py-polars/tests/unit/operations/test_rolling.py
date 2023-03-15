@@ -2,7 +2,9 @@ from __future__ import annotations
 
 import sys
 import typing
-from datetime import date, datetime, timedelta
+from datetime import date
+from datetime import datetime
+from datetime import timedelta
 from typing import TYPE_CHECKING
 
 import pytest

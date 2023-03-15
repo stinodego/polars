@@ -1,7 +1,8 @@
 from __future__ import annotations
 
 import os
-from typing import TYPE_CHECKING, Sequence
+from typing import TYPE_CHECKING
+from typing import Sequence
 
 import polars.internals as pli
 from polars.internals.series.utils import expr_dispatch

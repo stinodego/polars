@@ -2,7 +2,8 @@ from __future__ import annotations
 
 import pickle
 from functools import partial
-from typing import Any, cast
+from typing import Any
+from typing import cast
 
 import polars as pl
 from polars import internals as pli
@@ -58,12 +59,12 @@ def _scan_pyarrow_dataset_impl(
     _filter = None
     if predicate:
         # imports are used by inline python evaluated by `eval`
-        from polars.datatypes import Date, Datetime, Duration  # noqa: F401
-        from polars.utils.convert import (
-            _to_python_datetime,  # noqa: F401
-            _to_python_time,  # noqa: F401
-            _to_python_timedelta,  # noqa: F401
-        )
+        from polars.datatypes import Date  # noqa: F401
+        from polars.datatypes import Datetime  # noqa: F401
+        from polars.datatypes import Duration  # noqa: F401
+        from polars.utils.convert import _to_python_datetime  # noqa: F401
+        from polars.utils.convert import _to_python_time  # noqa: F401
+        from polars.utils.convert import _to_python_timedelta  # noqa: F401
 
         _filter = eval(predicate)
     if n_rows:

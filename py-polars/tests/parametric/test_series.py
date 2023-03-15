@@ -7,8 +7,11 @@ from decimal import Decimal
 from typing import no_type_check
 
 import numpy as np
-from hypothesis import given, settings
-from hypothesis.strategies import booleans, floats, sampled_from
+from hypothesis import given
+from hypothesis import settings
+from hypothesis.strategies import booleans
+from hypothesis.strategies import floats
+from hypothesis.strategies import sampled_from
 from numpy.testing import assert_array_equal
 
 import polars as pl

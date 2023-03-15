@@ -3,12 +3,15 @@
 # ----------------------------------------------------
 from __future__ import annotations
 
-from hypothesis import example, given, settings
+from hypothesis import example
+from hypothesis import given
+from hypothesis import settings
 from hypothesis.strategies import integers
 
 import polars as pl
 from polars.testing import assert_frame_equal
-from polars.testing.parametric import column, dataframes
+from polars.testing.parametric import column
+from polars.testing.parametric import dataframes
 
 
 @given(df=dataframes())

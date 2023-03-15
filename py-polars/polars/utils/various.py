@@ -4,11 +4,18 @@ import contextlib
 import os
 import re
 import sys
-from collections.abc import MappingView, Sized
-from typing import TYPE_CHECKING, Any, Generator, Iterable, Sequence, TypeVar
+from collections.abc import MappingView
+from collections.abc import Sized
+from typing import TYPE_CHECKING
+from typing import Any
+from typing import Generator
+from typing import Iterable
+from typing import Sequence
+from typing import TypeVar
 
 import polars.internals as pli
-from polars.datatypes import Int64, is_polars_dtype
+from polars.datatypes import Int64
+from polars.datatypes import is_polars_dtype
 
 with contextlib.suppress(ImportError):  # Module not available when building docs
     from polars.polars import PyExpr
@@ -27,9 +34,11 @@ if TYPE_CHECKING:
     from polars.internals.type_aliases import SizeUnit
 
     if sys.version_info >= (3, 10):
-        from typing import ParamSpec, TypeGuard
+        from typing import ParamSpec
+        from typing import TypeGuard
     else:
-        from typing_extensions import ParamSpec, TypeGuard
+        from typing_extensions import ParamSpec
+        from typing_extensions import TypeGuard
 
     P = ParamSpec("P")
     T = TypeVar("T")

@@ -3,7 +3,9 @@ from __future__ import annotations
 import sys
 import tempfile
 import typing
-from datetime import date, datetime, time
+from datetime import date
+from datetime import datetime
+from datetime import time
 from pathlib import Path
 
 import pyarrow.dataset as ds

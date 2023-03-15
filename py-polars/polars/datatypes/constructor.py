@@ -1,7 +1,10 @@
 from __future__ import annotations
 
 from decimal import Decimal as PyDecimal
-from typing import TYPE_CHECKING, Any, Callable, Sequence
+from typing import TYPE_CHECKING
+from typing import Any
+from typing import Callable
+from typing import Sequence
 
 from polars import datatypes as dt
 from polars.dependencies import numpy as np

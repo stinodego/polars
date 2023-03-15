@@ -1,19 +1,21 @@
 from __future__ import annotations
 
 import inspect
-from datetime import date, datetime, time, timedelta
-from typing import TYPE_CHECKING, Any
+from datetime import date
+from datetime import datetime
+from datetime import time
+from datetime import timedelta
+from typing import TYPE_CHECKING
+from typing import Any
 
 import pytest
 
 import polars as pl
-from polars.utils.convert import (
-    _date_to_pl_date,
-    _datetime_to_pl_timestamp,
-    _time_to_pl_time,
-    _timedelta_to_pl_duration,
-    _timedelta_to_pl_timedelta,
-)
+from polars.utils.convert import _date_to_pl_date
+from polars.utils.convert import _datetime_to_pl_timestamp
+from polars.utils.convert import _time_to_pl_time
+from polars.utils.convert import _timedelta_to_pl_duration
+from polars.utils.convert import _timedelta_to_pl_timedelta
 from polars.utils.decorators import deprecate_nonkeyword_arguments
 from polars.utils.various import parse_version
 

@@ -1,30 +1,33 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import (
-    TYPE_CHECKING,
-    Any,
-    BinaryIO,
-    Callable,
-    Mapping,
-    Sequence,
-    TextIO,
-    cast,
-)
+from typing import TYPE_CHECKING
+from typing import Any
+from typing import BinaryIO
+from typing import Callable
+from typing import Mapping
+from typing import Sequence
+from typing import TextIO
+from typing import cast
 
 import polars.internals as pli
 from polars.convert import from_arrow
-from polars.datatypes import N_INFER_DEFAULT, Utf8
-from polars.internals import DataFrame, LazyFrame
+from polars.datatypes import N_INFER_DEFAULT
+from polars.datatypes import Utf8
+from polars.internals import DataFrame
+from polars.internals import LazyFrame
 from polars.internals.batched import BatchedCsvReader
 from polars.internals.io import _prepare_file_arg
-from polars.utils.decorators import deprecate_nonkeyword_arguments, deprecated_alias
-from polars.utils.various import handle_projection_columns, normalise_filepath
+from polars.utils.decorators import deprecate_nonkeyword_arguments
+from polars.utils.decorators import deprecated_alias
+from polars.utils.various import handle_projection_columns
+from polars.utils.various import normalise_filepath
 
 if TYPE_CHECKING:
     from io import BytesIO
 
-    from polars.datatypes import PolarsDataType, SchemaDict
+    from polars.datatypes import PolarsDataType
+    from polars.datatypes import SchemaDict
     from polars.internals.type_aliases import CsvEncoding
 
 

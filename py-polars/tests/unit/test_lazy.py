@@ -1,17 +1,21 @@
 from __future__ import annotations
 
-from datetime import date, datetime
+from datetime import date
+from datetime import datetime
 from functools import reduce
 from inspect import signature
 from operator import add
 from string import ascii_letters
-from typing import TYPE_CHECKING, Any, cast
+from typing import TYPE_CHECKING
+from typing import Any
+from typing import cast
 
 import numpy as np
 import pytest
 
 import polars as pl
-from polars import lit, when
+from polars import lit
+from polars import when
 from polars.datatypes import NUMERIC_DTYPES
 from polars.testing import assert_frame_equal
 from polars.testing.asserts import assert_series_equal
