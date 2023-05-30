@@ -29,6 +29,7 @@ jobs:
           workspaces: py-polars
 
       - name: Run cargo build
+        working-directory: py-polars
         env:
           RUSTFLAGS: -C debuginfo=0  # Do not produce debug symbols to keep memory usage down
         run: cargo build
