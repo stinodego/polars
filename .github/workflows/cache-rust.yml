@@ -13,7 +13,6 @@ jobs:
   rust:
     runs-on: ubuntu-latest
     strategy:
-      fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest]
 
@@ -29,7 +28,7 @@ jobs:
           shared-key: shared
           workspaces: py-polars
 
-      - name: cargo build
+      - name: Run cargo build
         env:
           RUSTFLAGS: -C debuginfo=0  # Do not produce debug symbols to keep memory usage down
         run: cargo build
