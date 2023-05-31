@@ -47,7 +47,7 @@ jobs:
       - name: Cache Rust
         uses: Swatinem/rust-cache@v2
         with:
-          shared-key: shared-ubuntu-latest
+          shared-key: shared-ubuntu-latest-py-polars
           workspaces: py-polars
           save-if: false
 
@@ -108,7 +108,7 @@ jobs:
       - name: Cache Rust
         uses: Swatinem/rust-cache@v2
         with:
-          shared-key: shared-windows-latest
+          shared-key: shared-windows-latest-py-polars
           workspaces: py-polars
           save-if: false
 

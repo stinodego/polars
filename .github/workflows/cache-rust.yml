@@ -4,10 +4,10 @@ on:
   push:
     branches:
       - main
-    paths:
-    - py-polars/**
-    - polars/**
-    - .github/workflows/cache-rust.yml
+    # paths:
+    # - py-polars/**
+    # - polars/**
+    # - .github/workflows/cache-rust.yml
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -18,6 +18,10 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest]
+        workspace: [py-polars, polars, examples]
+        exclude:
+          - os: windows-latest
+            workspace: examples
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -26,14 +30,18 @@ jobs:
       - name: Set up Rust
         run: rustup show
 
+      - name: Set to stable toolchain
+        if: matrix.workspace == 'examples'
+        run: rustup override set stable
+
       - name: Cache Rust
         uses: Swatinem/rust-cache@v2
         with:
-          shared-key: shared-${{ matrix.os }}
-          workspaces: py-polars
+          shared-key: shared-${{ matrix.os }}-${{ matrix.workspace }}
+          workspaces: ${{ matrix.workspace }}
 
       - name: Run cargo build
-        working-directory: py-polars
+        working-directory: ${{ matrix.workspace }}
         env:
           RUSTFLAGS: -C debuginfo=0  # Do not produce debug symbols to keep memory usage down
         run: cargo build

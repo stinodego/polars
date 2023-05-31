@@ -22,6 +22,10 @@ jobs:
 
       - name: Cache Rust
         uses: Swatinem/rust-cache@v2
+        with:
+          shared-key: shared-ubuntu-latest-examples
+          workspaces: examples
+          save-if: false
 
       - name: Run cargo check
         working-directory: examples
@@ -37,13 +41,17 @@ jobs:
 
       - name: Cache Rust
         uses: Swatinem/rust-cache@v2
+        with:
+          shared-key: shared-ubuntu-latest-polars
+          workspaces: polars
+          save-if: false
 
       - name: Install dependencies
         run: cargo install cargo-hack
 
       - name: Run cargo hack
         working-directory: polars
-        run: cargo hack check --each-feature --no-dev-deps --features private 
+        run: cargo hack check --each-feature --no-dev-deps --features private
   lint:
     runs-on: ubuntu-latest
     defaults:
@@ -59,7 +67,9 @@ jobs:
       - name: Cache Rust
         uses: Swatinem/rust-cache@v2
         with:
+          shared-key: shared-ubuntu-latest-polars
           workspaces: polars
+          save-if: false
 
       - name: Run rustfmt
         run: cargo fmt --all -- --check
@@ -101,7 +111,9 @@ jobs:
       - name: Cache Rust
         uses: Swatinem/rust-cache@v2
         with:
+          shared-key: shared-${{ matrix.os }}-polars
           workspaces: polars
+          save-if: false
 
       - name: Run tests
         env:
