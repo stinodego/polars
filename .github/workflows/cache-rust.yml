@@ -16,6 +16,7 @@ concurrency:
 jobs:
   cache-rust:
     strategy:
+      fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest]
         workspace: [py-polars, polars, examples]
@@ -27,10 +28,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Set up Rust
+      - name: Set up nightly toolchain
+        if: matrix.workspace != 'examples'
         run: rustup show
 
-      - name: Set to stable toolchain
+      - name: Set up stable toolchain
         if: matrix.workspace == 'examples'
         run: rustup override set stable
 
@@ -44,4 +46,4 @@ jobs:
         working-directory: ${{ matrix.workspace }}
         env:
           RUSTFLAGS: -C debuginfo=0  # Do not produce debug symbols to keep memory usage down
-        run: cargo build --all-features
+        run: cargo build ${{ matrix.workspace != 'examples' && '--all-features' || ''}}
