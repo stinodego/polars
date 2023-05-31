@@ -44,4 +44,4 @@ jobs:
         working-directory: ${{ matrix.workspace }}
         env:
           RUSTFLAGS: -C debuginfo=0  # Do not produce debug symbols to keep memory usage down
-        run: cargo build
+        run: cargo build --all-features
