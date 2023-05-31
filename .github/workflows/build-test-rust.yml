@@ -2,10 +2,10 @@ name: Build and test Rust
 
 on:
   pull_request:
-    paths:
-      - polars/**
-      - examples/**
-      - .github/workflows/build-test-rust.yml
+    # paths:
+    #   - polars/**
+    #   - examples/**
+    #   - .github/workflows/build-test-rust.yml
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
