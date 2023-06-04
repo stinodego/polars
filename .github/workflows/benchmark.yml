@@ -15,6 +15,11 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  RUSTC_WRAPPER: sccache
+  SCCACHE_GHA_ENABLED: 'true'
+  RUSTFLAGS: -C codegen-units=8 -C opt-level=2 -C lto=thin -C linker-plugin-lto -C target-cpu=native
+
 jobs:
   main:
     runs-on: ubuntu-latest
@@ -59,13 +64,16 @@ jobs:
         with:
           workspaces: py-polars
 
+      - name: Run sccache-cache
+        uses: mozilla-actions/sccache-action@v0.0.3
+
       - name: Install Polars release build
-        env:
-          RUSTFLAGS: -C embed-bitcode
+        # env:
+        #   RUSTFLAGS: -C codegen-units=8 -C opt-level=2 -C lto=thin -C linker-plugin-lto -C target-cpu=native
         working-directory: py-polars
         run: |
           source activate
-          maturin develop --release -- -C codegen-units=8 -C lto=thin -C target-cpu=native
+          maturin develop --release
 
       - name: Run H2O AI database benchmark - on strings
         working-directory: py-polars/tests/benchmark
