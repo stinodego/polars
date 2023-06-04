@@ -58,10 +58,10 @@ jobs:
       - name: Set up Rust
         run: rustup show
 
-      - name: Cache Rust
-        uses: Swatinem/rust-cache@v2
-        with:
-          workspaces: py-polars
+      # - name: Cache Rust
+      #   uses: Swatinem/rust-cache@v2
+      #   with:
+      #     workspaces: py-polars
 
       - name: Run sccache-cache
         uses: mozilla-actions/sccache-action@v0.0.3
@@ -72,7 +72,7 @@ jobs:
         working-directory: py-polars
         run: |
           source activate
-          maturin develop --release -- -C codegen-units=8 -C opt-level=2 -C lto=thin -C target-cpu=native
+          maturin develop --release -- -C codegen-units=8 -C lto=thin -C target-cpu=native
 
       - name: Run H2O AI database benchmark - on strings
         working-directory: py-polars/tests/benchmark
