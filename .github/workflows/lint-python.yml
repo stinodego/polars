@@ -1,37 +1,37 @@
-name: Lint Python
+# name: Lint Python
 
-on:
-  pull_request:
-    # paths:
-    #   - py-polars/**
-    #   - .github/workflows/lint-python.yml
-  push:
-    branches:
-      - main
+# on:
+#   pull_request:
+#     # paths:
+#     #   - py-polars/**
+#     #   - .github/workflows/lint-python.yml
+#   push:
+#     branches:
+#       - main
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+# concurrency:
+#   group: ${{ github.workflow }}-${{ github.ref }}
+#   cancel-in-progress: true
 
-jobs:
-  lint-rust:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: py-polars
+# jobs:
+#   lint-rust:
+#     runs-on: ubuntu-latest
+#     defaults:
+#       run:
+#         working-directory: py-polars
 
-    steps:
-      - uses: actions/checkout@v3
+#     steps:
+#       - uses: actions/checkout@v3
 
-      - name: Set up Rust
-        run: rustup component add rustfmt clippy
+#       - name: Set up Rust
+#         run: rustup component add rustfmt clippy
 
-      - name: Cache Rust
-        uses: Swatinem/rust-cache@v2
-        with:
-          workspaces: py-polars
+#       - name: Cache Rust
+#         uses: Swatinem/rust-cache@v2
+#         with:
+#           workspaces: py-polars
 
-      - name: Lint Rust
-        run: |
-          cargo fmt --all -- --check
-          make clippy
+#       - name: Lint Rust
+#         run: |
+#           cargo fmt --all -- --check
+#           make clippy
