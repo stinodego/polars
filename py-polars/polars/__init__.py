@@ -8,6 +8,8 @@ with contextlib.suppress(ImportError):  # Module not available when building doc
 
     register_object_builder()
 
+import os
+
 from polars import api
 from polars.config import Config
 from polars.convert import (
