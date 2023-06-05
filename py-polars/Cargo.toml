@@ -178,6 +178,7 @@ lto = "fat"
 # This is ignored here; would be set in .cargo/config.toml.
 # Should not be used when packaging
 # target-cpu = "native"
+# Hello
 
 [build-dependencies]
 built = { version = "0.6", features = ["chrono", "git2"], optional = true }
