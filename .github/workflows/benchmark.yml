@@ -94,13 +94,16 @@ jobs:
           maturin develop --release -- -C codegen-units=8 -C lto=thin -C target-cpu=native
 
       - name: Run H2O AI database benchmark - on strings
+        if: github.ref_name != 'main'
         working-directory: py-polars/tests/benchmark
         run: python run_h2oai_benchmark.py on_strings
 
       - name: Run H2O AI database benchmark - on categoricals
+        if: github.ref_name != 'main'
         working-directory: py-polars/tests/benchmark
         run: python run_h2oai_benchmark.py
 
       - name: Run various benchmark tests
+        if: github.ref_name != 'main'
         working-directory: py-polars
         run: pytest -m benchmark --durations 0 -v
