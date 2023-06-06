@@ -48,6 +48,7 @@ git = "https://github.com/jorgecarleitao/arrow2"
 rev = "fb5e4d591c7149df590a330365fae55d2370962f"
 # path = "../arrow2"
 # branch = "polars_2023-05-25"
+# yo
 version = "0.17"
 default-features = false
 features = [
