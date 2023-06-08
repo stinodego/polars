@@ -1,5 +1,6 @@
 name: Test Rust
 
+# Hi
 on:
   pull_request:
     paths:
