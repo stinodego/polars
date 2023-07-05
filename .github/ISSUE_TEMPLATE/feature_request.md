@@ -1,0 +1,12 @@
+---
+name: ✨ Feature request
+about: Suggest a new feature or enhancement for Polars
+labels: enhancement
+---
+<!--
+Please describe the behavior you want and the motivation.
+Please also provide examples of how Polars would be used if your feature were added.
+
+If you're not sure what to write here, try imagining what the ideal documentation
+of your new feature would look like. Then try to write it.
+-->
