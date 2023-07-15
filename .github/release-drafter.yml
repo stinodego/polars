@@ -32,7 +32,7 @@ version-resolver:
   minor:
     labels: breaking
   default: patch
-
+#hi
 autolabeler:
   - label: rust
     title:
