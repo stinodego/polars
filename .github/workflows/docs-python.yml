@@ -39,6 +39,7 @@ jobs:
           regex="py-([0-9]+\.[0-9]+)\.[0-9]+.*"
           [[ $tag =~ $regex ]]
           version=${BASH_REMATCH[1]}
+          echo $version
           echo "version=$version" >> "$GITHUB_OUTPUT"
 
       - name: Build Python documentation
@@ -54,6 +55,15 @@ jobs:
         with:
           folder: py-polars/docs/build/html
           target-folder: docs/python/dev
+          single-commit: true
+
+      - name: Deploy Python docs for latest release version - versioned
+        if: ${{ github.ref_type == 'tag' }}
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: py-polars/docs/build/html
+          # Keeping this folder for backwards compatibility
+          target-folder: docs/python/${{ steps.version.outputs.version }}
           single-commit: true
 
       - name: Deploy Python docs for latest release version
