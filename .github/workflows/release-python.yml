@@ -20,13 +20,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-32gb-ram]
+        os: [ubuntu-latest]  #, macos-latest, windows-32gb-ram]
         cpu: [x86-64, aarch64]
         lts-cpu: [false, true]
         u64-idx: [false, true]
         exclude:
-          - os: windows-32gb-ram
-            cpu: aarch64
           - lts-cpu: true
             u64-idx: true
 
@@ -90,7 +88,7 @@ jobs:
           command: build
           target: ${{ steps.target.outputs.target }}
           working-directory: py-polars
-          args: --release ${{ matrix.os == 'ubuntu-latest' && matrix.cpu == 'x86-64' && '--sdist' || ''}}
+          args: ${{ matrix.os == 'ubuntu-latest' && matrix.cpu == 'x86-64' && '--sdist' || ''}}
           maturin-version: ${{ env.MATURIN_VERSION }}
           rust-toolchain: ${{ env.RUST_TOOLCHAIN }}
           manylinux: auto
