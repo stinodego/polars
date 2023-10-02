@@ -1,6 +1,7 @@
 name: Release Python
 
 on:
+  pull_request:
   push:
     tags:
       - py-*
@@ -8,7 +9,6 @@ on:
 env:
   RUST_TOOLCHAIN: nightly-2023-10-02
   PYTHON_VERSION: '3.8'
-  MATURIN_VERSION: '1.2.3'
 
 defaults:
   run:
@@ -20,15 +20,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-32gb-ram]
-        cpu: [x86-64, aarch64]
-        lts-cpu: [false, true]
-        u64-idx: [false, true]
-        exclude:
-          - os: windows-32gb-ram
-            cpu: aarch64
-          - lts-cpu: true
-            u64-idx: true
+        os: [ubuntu-latest]
+        cpu: [x86-64]
+        lts-cpu: [false]
+        u64-idx: [false]
 
     steps:
       - uses: actions/checkout@v4
@@ -90,8 +85,7 @@ jobs:
           command: build
           target: ${{ steps.target.outputs.target }}
           working-directory: py-polars
-          args: --release ${{ matrix.os == 'ubuntu-latest' && matrix.cpu == 'x86-64' && '--sdist' || ''}}
-          maturin-version: ${{ env.MATURIN_VERSION }}
+          args: ${{ matrix.os == 'ubuntu-latest' && matrix.cpu == 'x86-64' && '--sdist' || ''}}
           rust-toolchain: ${{ env.RUST_TOOLCHAIN }}
           manylinux: auto
 
