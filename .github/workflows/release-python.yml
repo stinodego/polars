@@ -26,7 +26,7 @@ jobs:
         architecture: [x86-64, aarch64]
         exclude:
           - os: windows-32gb-ram
-            cpu: aarch64
+            package: aarch64
 
     steps:
       - uses: actions/checkout@v4
@@ -95,18 +95,48 @@ jobs:
             ${{ matrix.os == 'ubuntu-latest' && matrix.architecture == 'x86-64' && '--sdist' || ''}}
           manylinux: auto
 
+      - name: Test wheel - x86-64
+        if: matrix.architecture == 'x86-64'
+        run: |
+          pip install --force-reinstall dist/*.whl
+          python -c 'import polars'
+
+      - name: Test wheel - Linux aarch64
+        uses: uraimo/run-on-arch-action@v2
+        if: matrix.architecture == 'aarch64' && matrix.os == 'ubuntu-latest'
+        with:
+          arch: aarch64
+          distro: ubuntu22.04
+          githubToken: ${{ github.token }}
+          install: |
+            apt-get update
+            apt-get install -y --no-install-recommends python3 python3-pip
+            pip3 install -U pip
+          run: |
+            pip3 install --force-reinstall --no-index --find-links dist/ ${{ matrix.package }}
+            python3 -c 'import polars'
+
+      - name: Upload wheel
+        uses: actions/upload-artifact@v3
+        with:
+          name: wheels
+          path: dist/*.whl
+
+      - name: Test sdist
+        # Skipped because of issue with maturin: https://github.com/pola-rs/polars/issues/11371
+        if: false
+        # if: matrix.os == 'ubuntu-latest' && matrix.package == 'x86-64'
+        run: |
+          rustup show
+          pip install --force-reinstall dist/*.tar.gz
+          python -c 'import polars'
+
       - name: Upload sdist
         if: matrix.os == 'ubuntu-latest' && matrix.architecture == 'x86-64'
         uses: actions/upload-artifact@v3
         with:
           name: sdist
           path: dist/*.tar.gz
-
-      - name: Upload wheels
-        uses: actions/upload-artifact@v3
-        with:
-          name: wheels
-          path: dist/*.whl
 
   publish-to-pypi:
     needs: build-wheels
