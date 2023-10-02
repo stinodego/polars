@@ -22,11 +22,8 @@ jobs:
       fail-fast: false
       matrix:
         package: [polars, polars-lts-cpu, polars-u64-idx]
-        os: [ubuntu-latest, macos-latest, windows-32gb-ram]
-        architecture: [x86-64, aarch64]
-        exclude:
-          - os: windows-32gb-ram
-            cpu: aarch64
+        os: [ubuntu-latest]  #, macos-latest, windows-32gb-ram]
+        architecture: [x86-64]  #, aarch64]
 
     steps:
       - uses: actions/checkout@v4
@@ -86,7 +83,7 @@ jobs:
           command: build
           target: ${{ steps.target.outputs.target }}
           working-directory: py-polars
-          args: --release ${{ matrix.os == 'ubuntu-latest' && matrix.architecture == 'x86-64' && '--sdist' || ''}}
+          args: ${{ matrix.os == 'ubuntu-latest' && matrix.architecture == 'x86-64' && '--sdist' || ''}}
           manylinux: auto
 
       - name: Upload sdist
