@@ -1,9 +1,25 @@
 name: Release Python
 
 on:
-  push:
-    tags:
-      - py-*
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: The version to tag, without the leading `py-`. If omitted, will initiate a dry run (no uploads).
+        type: string
+      sha:
+        description: The full SHA of the commit to be released. If omitted, the latest commit on the main branch will be used.
+        default: ""
+        type: string
+  pull_request:
+    paths:
+      # When we change pyproject.toml, we want to ensure that the maturin builds still work
+      - pyproject.toml
+      # And when we change this workflow itself...
+      - .github/workflows/release-python.yml
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 env:
   PYTHON_VERSION: '3.8'
@@ -16,6 +32,36 @@ defaults:
     shell: bash
 
 jobs:
+  validate-tag:
+    if: ${{ inputs.tag }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main # We checkout the main branch to check for the commit
+      - name: Check main branch
+        if: ${{ inputs.sha }}
+        run: |
+          # Fetch the main branch since a shallow checkout is used by default
+          git fetch origin main --unshallow
+          if ! git branch --contains ${{ inputs.sha }} | grep -E '(^|\s)main$'; then
+            echo "The specified SHA is not on the main branch" >&2
+            exit 1
+          fi
+      - name: Check tag consistency
+        run: |
+          # Switch to the commit we want to release
+          git checkout ${{ inputs.sha }}
+          version=$(grep "version = " pyproject.toml | sed -e 's/version = "\(.*\)"/\1/g')
+          if [ "${{ inputs.tag }}" != "${version}" ]; then
+            echo "The input tag does not match the version from pyproject.toml:" >&2
+            echo "${{ inputs.tag }}" >&2
+            echo "${version}" >&2
+            exit 1
+          else
+            echo "Releasing ${version}"
+          fi
+
   create-sdist:
     runs-on: ubuntu-latest
     strategy:
@@ -176,6 +222,25 @@ jobs:
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           verbose: true
+
+  tag-release:
+    needs: publish-to-pypi
+    runs-on: ubuntu-latest
+    permissions:
+      # For git tag
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.sha }}
+      - name: git tag
+        run: |
+          git config user.email "info@polars.tech"
+          git config user.name "Polars Release CI"
+          git tag -m "v${{ inputs.tag }}" "v${{ inputs.tag }}"
+          # If there is duplicate tag, this will fail. The publish to pypi action will have been a noop (due to skip
+          # existing), so we make a non-destructive exit here
+          git push --tags
 
   update-github-release:
     needs: create-sdist
