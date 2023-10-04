@@ -3,8 +3,8 @@ name: Release Python
 on:
   workflow_dispatch:
     inputs:
-      tag:
-        description: The version to tag, without the leading `py-`. If omitted, will initiate a dry run (no uploads).
+      version:
+        description: The version number of the release. If omitted, will initiate a dry run (no uploads).
         type: string
       sha:
         description: The full SHA of the commit to be released. If omitted, the latest commit on the main branch will be used.
@@ -33,7 +33,7 @@ defaults:
 
 jobs:
   validate-tag:
-    if: ${{ inputs.tag }}
+    if: ${{ inputs.version }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -53,9 +53,9 @@ jobs:
           # Switch to the commit we want to release
           git checkout ${{ inputs.sha }}
           version=$(grep "version = " pyproject.toml | sed -e 's/version = "\(.*\)"/\1/g')
-          if [ "${{ inputs.tag }}" != "${version}" ]; then
+          if [ "${{ inputs.version }}" != "${version}" ]; then
             echo "The input tag does not match the version from pyproject.toml:" >&2
-            echo "${{ inputs.tag }}" >&2
+            echo "${{ inputs.version }}" >&2
             echo "${version}" >&2
             exit 1
           else
@@ -237,7 +237,7 @@ jobs:
         run: |
           git config user.email "info@polars.tech"
           git config user.name "Polars Release CI"
-          git tag -m "v${{ inputs.tag }}" "v${{ inputs.tag }}"
+          git tag -m "v${{ inputs.version }}" "v${{ inputs.version }}"
           # If there is duplicate tag, this will fail. The publish to pypi action will have been a noop (due to skip
           # existing), so we make a non-destructive exit here
           git push --tags
