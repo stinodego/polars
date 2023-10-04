@@ -4,12 +4,12 @@ on:
   workflow_dispatch:
     inputs:
       sha:
-        description: The full SHA of the commit to be released. If omitted, the latest commit on the main branch is used.
+        description: Commit SHA
         type: string
-      dry-run:
-        description: Prepare the release, but do not publish it.
-        default: true
+      dry_run:
+        description: Dry run
         type: boolean
+        default: true
   # pull_request:
   #   paths:
   #     - .github/workflows/release-python.yml
@@ -168,7 +168,7 @@ jobs:
           path: dist/*.whl
 
   publish-to-pypi:
-    if: !inputs.dry-run
+    if: !inputs.dry_run
     needs: [create-sdist, build-wheels]
     environment:
       name: release-python
