@@ -8,6 +8,9 @@ replacers:
   # Remove conventional commits from titles
   - search: '/- (build|chore|ci|depr|docs|feat|fix|perf|refactor|release|test)(\(.*\))?(\!)?\: /g'
     replace: '- '
+  # Uppercase the first letter of each changelog entry
+  - search: '/- ([a-z])/g'
+    replace: '- \u$1'
 
 autolabeler:
   - label: rust
