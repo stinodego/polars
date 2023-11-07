@@ -22,6 +22,10 @@ requirements: .venv  ## Install/refresh Python project requirements
 	$(VENV_BIN)/pip install --upgrade -r py-polars/docs/requirements-docs.txt
 	$(VENV_BIN)/pip install --upgrade -r docs/requirements.txt
 
+.PHONY: clippy
+clippy:  ## Run clippy
+	cargo clippy --workspace --all-features --locked -- -D warnings
+
 .PHONY: build-python
 build-python: .venv  ## Compile and install Python Polars for development
 	@$(MAKE) -s -C py-polars build
