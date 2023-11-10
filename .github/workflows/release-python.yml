@@ -33,7 +33,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        package: [polars, polars-lts-cpu, polars-u64-idx]
+        package: [polars]
 
     steps:
       - uses: actions/checkout@v4
@@ -85,12 +85,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        package: [polars, polars-lts-cpu, polars-u64-idx]
-        os: [ubuntu-latest, macos-latest, windows-32gb-ram]
+        package: [polars]
+        os: [ubuntu-latest]
         architecture: [x86-64, aarch64]
-        exclude:
-          - os: windows-32gb-ram
-            architecture: aarch64
 
     steps:
       - uses: actions/checkout@v4
