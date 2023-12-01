@@ -45,7 +45,7 @@
   <a href="https://discord.gg/4UfP5cfBE7">Discord</a>
 </p>
 
-## Polars: Blazingly fast DataFrames in Rust, Python, Node.js, R and SQL
+## Polarrs: Blazingly fast DataFrames in Rust, Python, Node.js, R and SQL
 
 Polars is a DataFrame interface on top of an OLAP Query Engine implemented in Rust using
 [Apache Arrow Columnar Format](https://arrow.apache.org/docs/format/Columnar.html) as the memory model.
