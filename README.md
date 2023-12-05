@@ -215,6 +215,8 @@ You can also install the dependencies directly.
 
 Releases happen quite often (weekly / every few days) at the moment, so updating polars regularly to get the latest bugfixes / features might not be a bad idea.
 
+More triggers.
+
 ### Rust
 
 You can take latest release from `crates.io`, or if you want to use the latest features / performance improvements
