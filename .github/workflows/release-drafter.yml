@@ -19,14 +19,14 @@ jobs:
   main:
     runs-on: ubuntu-latest
     steps:
-      - name: Draft Rust release
-        uses: release-drafter/release-drafter@v5
-        with:
-          config-name: release-drafter-rust.yml
-          commitish: ${{ inputs.sha || github.sha }}
-          disable-autolabeler: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Draft Rust release
+      #   uses: release-drafter/release-drafter@v5
+      #   with:
+      #     config-name: release-drafter-rust.yml
+      #     commitish: ${{ inputs.sha || github.sha }}
+      #     disable-autolabeler: true
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Draft Python release
         uses: release-drafter/release-drafter@v5
