@@ -28,177 +28,177 @@ defaults:
     shell: bash
 
 jobs:
-  create-sdist:
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        package: [polars, polars-lts-cpu, polars-u64-idx]
+  # create-sdist:
+  #   runs-on: ubuntu-latest
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       package: [polars, polars-lts-cpu, polars-u64-idx]
 
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ inputs.sha }}
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #       with:
+  #         ref: ${{ inputs.sha }}
 
-      # Avoid potential out-of-memory errors
-      - name: Set swap space for Linux
-        uses: pierotofy/set-swap-space@master
-        with:
-          swap-size-gb: 10
+  #     # Avoid potential out-of-memory errors
+  #     - name: Set swap space for Linux
+  #       uses: pierotofy/set-swap-space@master
+  #       with:
+  #         swap-size-gb: 10
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: ${{ env.PYTHON_VERSION }}
+  #     - name: Set up Python
+  #       uses: actions/setup-python@v4
+  #       with:
+  #         python-version: ${{ env.PYTHON_VERSION }}
 
-      - name: Install yq
-        if: matrix.package != 'polars'
-        run: pip install yq
-      - name: Update package name
-        if: matrix.package != 'polars'
-        run: tomlq -i -t ".project.name = \"${{ matrix.package }}\"" py-polars/pyproject.toml
-      - name: Add bigidx feature
-        if: matrix.package == 'polars-u64-idx'
-        run: tomlq -i -t '.dependencies.polars.features += ["bigidx"]' py-polars/Cargo.toml
+  #     - name: Install yq
+  #       if: matrix.package != 'polars'
+  #       run: pip install yq
+  #     - name: Update package name
+  #       if: matrix.package != 'polars'
+  #       run: tomlq -i -t ".project.name = \"${{ matrix.package }}\"" py-polars/pyproject.toml
+  #     - name: Add bigidx feature
+  #       if: matrix.package == 'polars-u64-idx'
+  #       run: tomlq -i -t '.dependencies.polars.features += ["bigidx"]' py-polars/Cargo.toml
 
-      - name: Create source distribution
-        uses: PyO3/maturin-action@v1
-        with:
-          command: sdist
-          args: >
-            --manifest-path py-polars/Cargo.toml
-            --out dist
+  #     - name: Create source distribution
+  #       uses: PyO3/maturin-action@v1
+  #       with:
+  #         command: sdist
+  #         args: >
+  #           --manifest-path py-polars/Cargo.toml
+  #           --out dist
 
-      - name: Test sdist
-        run: |
-          pip install --force-reinstall --verbose dist/*.tar.gz
-          python -c 'import polars'
+  #     - name: Test sdist
+  #       run: |
+  #         pip install --force-reinstall --verbose dist/*.tar.gz
+  #         python -c 'import polars'
 
-      - name: Upload sdist
-        uses: actions/upload-artifact@v3
-        with:
-          name: sdist
-          path: dist/*.tar.gz
+  #     - name: Upload sdist
+  #       uses: actions/upload-artifact@v3
+  #       with:
+  #         name: sdist
+  #         path: dist/*.tar.gz
 
-  build-wheels:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        package: [polars, polars-lts-cpu, polars-u64-idx]
-        os: [ubuntu-latest, macos-latest, windows-32gb-ram]
-        architecture: [x86-64, aarch64]
-        exclude:
-          - os: windows-32gb-ram
-            architecture: aarch64
+  # build-wheels:
+  #   runs-on: ${{ matrix.os }}
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       package: [polars, polars-lts-cpu, polars-u64-idx]
+  #       os: [ubuntu-latest, macos-latest, windows-32gb-ram]
+  #       architecture: [x86-64, aarch64]
+  #       exclude:
+  #         - os: windows-32gb-ram
+  #           architecture: aarch64
 
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ inputs.sha }}
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #       with:
+  #         ref: ${{ inputs.sha }}
 
-      # Avoid potential out-of-memory errors
-      - name: Set swap space for Linux
-        if: matrix.os == 'ubuntu-latest'
-        uses: pierotofy/set-swap-space@master
-        with:
-          swap-size-gb: 10
+  #     # Avoid potential out-of-memory errors
+  #     - name: Set swap space for Linux
+  #       if: matrix.os == 'ubuntu-latest'
+  #       uses: pierotofy/set-swap-space@master
+  #       with:
+  #         swap-size-gb: 10
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: ${{ env.PYTHON_VERSION }}
+  #     - name: Set up Python
+  #       uses: actions/setup-python@v4
+  #       with:
+  #         python-version: ${{ env.PYTHON_VERSION }}
 
-      - name: Install yq
-        if: matrix.package != 'polars'
-        run: pip install yq
-      - name: Update package name
-        if: matrix.package != 'polars'
-        run: tomlq -i -t ".project.name = \"${{ matrix.package }}\"" py-polars/pyproject.toml
-      - name: Add bigidx feature
-        if: matrix.package == 'polars-u64-idx'
-        run: tomlq -i -t '.dependencies.polars.features += ["bigidx"]' py-polars/Cargo.toml
+  #     - name: Install yq
+  #       if: matrix.package != 'polars'
+  #       run: pip install yq
+  #     - name: Update package name
+  #       if: matrix.package != 'polars'
+  #       run: tomlq -i -t ".project.name = \"${{ matrix.package }}\"" py-polars/pyproject.toml
+  #     - name: Add bigidx feature
+  #       if: matrix.package == 'polars-u64-idx'
+  #       run: tomlq -i -t '.dependencies.polars.features += ["bigidx"]' py-polars/Cargo.toml
 
-      - name: Set RUSTFLAGS for x86-64
-        if: matrix.architecture == 'x86-64' && matrix.package != 'polars-lts-cpu' && matrix.os != 'macos-latest'
-        run: echo "RUSTFLAGS=-C target-feature=+sse3,+ssse3,+sse4.1,+sse4.2,+popcnt,+avx,+avx2,+fma,+bmi1,+bmi2,+lzcnt" >> $GITHUB_ENV
-      - name: Set RUSTFLAGS for x86-64 MacOS
-        if: matrix.architecture == 'x86-64' && matrix.package != 'polars-lts-cpu' && matrix.os == 'macos-latest'
-        run: echo "RUSTFLAGS=-C target-feature=+sse3,+ssse3,+sse4.1,+sse4.2,+popcnt,+avx,+fma" >> $GITHUB_ENV
-      - name: Set RUSTFLAGS for x86-64 LTS CPU
-        if: matrix.architecture == 'x86-64' && matrix.package == 'polars-lts-cpu'
-        run: echo "RUSTFLAGS=-C target-feature=+sse3,+ssse3,+sse4.1,+sse4.2,+popcnt --cfg use_mimalloc" >> $GITHUB_ENV
+  #     - name: Set RUSTFLAGS for x86-64
+  #       if: matrix.architecture == 'x86-64' && matrix.package != 'polars-lts-cpu' && matrix.os != 'macos-latest'
+  #       run: echo "RUSTFLAGS=-C target-feature=+sse3,+ssse3,+sse4.1,+sse4.2,+popcnt,+avx,+avx2,+fma,+bmi1,+bmi2,+lzcnt" >> $GITHUB_ENV
+  #     - name: Set RUSTFLAGS for x86-64 MacOS
+  #       if: matrix.architecture == 'x86-64' && matrix.package != 'polars-lts-cpu' && matrix.os == 'macos-latest'
+  #       run: echo "RUSTFLAGS=-C target-feature=+sse3,+ssse3,+sse4.1,+sse4.2,+popcnt,+avx,+fma" >> $GITHUB_ENV
+  #     - name: Set RUSTFLAGS for x86-64 LTS CPU
+  #       if: matrix.architecture == 'x86-64' && matrix.package == 'polars-lts-cpu'
+  #       run: echo "RUSTFLAGS=-C target-feature=+sse3,+ssse3,+sse4.1,+sse4.2,+popcnt --cfg use_mimalloc" >> $GITHUB_ENV
 
-      - name: Set Rust target for aarch64
-        if: matrix.architecture == 'aarch64'
-        id: target
-        run: |
-          TARGET=${{ matrix.os == 'macos-latest' && 'aarch64-apple-darwin' || 'aarch64-unknown-linux-gnu'}}
-          echo "target=$TARGET" >> $GITHUB_OUTPUT
+  #     - name: Set Rust target for aarch64
+  #       if: matrix.architecture == 'aarch64'
+  #       id: target
+  #       run: |
+  #         TARGET=${{ matrix.os == 'macos-latest' && 'aarch64-apple-darwin' || 'aarch64-unknown-linux-gnu'}}
+  #         echo "target=$TARGET" >> $GITHUB_OUTPUT
 
-      - name: Set jemalloc for aarch64 Linux
-        if: matrix.architecture == 'aarch64' && matrix.os == 'ubuntu-latest'
-        run: |
-          echo "JEMALLOC_SYS_WITH_LG_PAGE=16" >> $GITHUB_ENV
+  #     - name: Set jemalloc for aarch64 Linux
+  #       if: matrix.architecture == 'aarch64' && matrix.os == 'ubuntu-latest'
+  #       run: |
+  #         echo "JEMALLOC_SYS_WITH_LG_PAGE=16" >> $GITHUB_ENV
 
-      - name: Build wheel
-        uses: PyO3/maturin-action@v1
-        with:
-          command: build
-          target: ${{ steps.target.outputs.target }}
-          args: >
-            --release
-            --manifest-path py-polars/Cargo.toml
-            --out dist
-          manylinux: ${{ matrix.architecture == 'aarch64' && '2_24' || 'auto' }}
+  #     - name: Build wheel
+  #       uses: PyO3/maturin-action@v1
+  #       with:
+  #         command: build
+  #         target: ${{ steps.target.outputs.target }}
+  #         args: >
+  #           --release
+  #           --manifest-path py-polars/Cargo.toml
+  #           --out dist
+  #         manylinux: ${{ matrix.architecture == 'aarch64' && '2_24' || 'auto' }}
 
-      - name: Upload wheel
-        uses: actions/upload-artifact@v3
-        with:
-          name: wheels
-          path: dist/*.whl
+  #     - name: Upload wheel
+  #       uses: actions/upload-artifact@v3
+  #       with:
+  #         name: wheels
+  #         path: dist/*.whl
 
-  publish-to-pypi:
-    needs: [create-sdist, build-wheels]
-    environment:
-      name: release-python
-      url: https://pypi.org/project/polars
-    runs-on: ubuntu-latest
-    permissions:
-      id-token: write
+  # publish-to-pypi:
+  #   needs: [create-sdist, build-wheels]
+  #   environment:
+  #     name: release-python
+  #     url: https://pypi.org/project/polars
+  #   runs-on: ubuntu-latest
+  #   permissions:
+  #     id-token: write
 
-    steps:
-      - name: Download sdist
-        uses: actions/download-artifact@v3
-        with:
-          name: sdist
-          path: dist
+  #   steps:
+  #     - name: Download sdist
+  #       uses: actions/download-artifact@v3
+  #       with:
+  #         name: sdist
+  #         path: dist
 
-      - name: Download wheels
-        uses: actions/download-artifact@v3
-        with:
-          name: wheels
-          path: dist
+  #     - name: Download wheels
+  #       uses: actions/download-artifact@v3
+  #       with:
+  #         name: wheels
+  #         path: dist
 
-      - name: Publish to PyPI
-        if: inputs.dry-run == false
-        uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          verbose: true
+  #     - name: Publish to PyPI
+  #       if: inputs.dry-run == false
+  #       uses: pypa/gh-action-pypi-publish@release/v1
+  #       with:
+  #         verbose: true
 
   publish-to-github:
-    needs: publish-to-pypi
+    # needs: publish-to-pypi
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           ref: ${{ inputs.sha }}
 
-      - name: Download sdist
-        uses: actions/download-artifact@v3
-        with:
-          name: sdist
-          path: dist
+      # - name: Download sdist
+      #   uses: actions/download-artifact@v3
+      #   with:
+      #     name: sdist
+      #     path: dist
 
       - name: Get version from Cargo.toml
         id: version
@@ -227,12 +227,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Upload sdist to GitHub release
-        run: gh release upload $TAG $FILES --clobber
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TAG: ${{ steps.github-release.outputs.tag_name }}
-          FILES: dist/polars-*.tar.gz
+      # - name: Upload sdist to GitHub release
+      #   run: gh release upload $TAG $FILES --clobber
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     TAG: ${{ steps.github-release.outputs.tag_name }}
+      #     FILES: dist/polars-*.tar.gz
 
       - name: Publish GitHub release
         if: inputs.dry-run == false
@@ -241,14 +241,14 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAG: ${{ steps.github-release.outputs.tag_name }}
 
-      - name: Trigger other workflows related to the release
-        if: inputs.dry-run == false && steps.version.outputs.is_prerelease == 'false'
-        uses: peter-evans/repository-dispatch@v2
-        with:
-          event-type: python-release
-          client-payload: >
-            {
-              "version": "${{ steps.version.outputs.version }}",
-              "tag": "${{ steps.github-release.outputs.tag_name }}",
-              "sha": "${{ inputs.sha || github.sha }}"
-            }
+      # - name: Trigger other workflows related to the release
+      #   if: inputs.dry-run == false && steps.version.outputs.is_prerelease == 'false'
+      #   uses: peter-evans/repository-dispatch@v2
+      #   with:
+      #     event-type: python-release
+      #     client-payload: >
+      #       {
+      #         "version": "${{ steps.version.outputs.version }}",
+      #         "tag": "${{ steps.github-release.outputs.tag_name }}",
+      #         "sha": "${{ inputs.sha || github.sha }}"
+      #       }

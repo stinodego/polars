@@ -3,6 +3,7 @@ _extends: polars:.github/release-drafter.yml
 name-template: Python Polars $RESOLVED_VERSION
 tag-template: py-$RESOLVED_VERSION
 tag-prefix: py-
+filter-by-commitish: true
 
 include-labels:
   - python
