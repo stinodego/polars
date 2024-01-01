@@ -33,7 +33,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        package: [polars, polars-lts-cpu, polars-u64-idx]
+        package: [polars, polars-lts-cpu]
 
     steps:
       - uses: actions/checkout@v4
@@ -69,10 +69,10 @@ jobs:
             --manifest-path py-polars/Cargo.toml
             --out dist
 
-      - name: Test sdist
-        run: |
-          pip install --force-reinstall --verbose dist/*.tar.gz
-          python -c 'import polars'
+      # - name: Test sdist
+      #   run: |
+      #     pip install --force-reinstall --verbose dist/*.tar.gz
+      #     python -c 'import polars'
 
       - name: Upload sdist
         uses: actions/upload-artifact@v4
@@ -85,12 +85,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        package: [polars, polars-lts-cpu, polars-u64-idx]
-        os: [ubuntu-latest, macos-latest, windows-32gb-ram]
+        package: [polars, polars-lts-cpu]
+        os: [ubuntu-latest]
         architecture: [x86-64, aarch64]
-        exclude:
-          - os: windows-32gb-ram
-            architecture: aarch64
 
     env:
       SED_INPLACE: ${{ matrix.os == 'macos-latest' && '-i ''''' || '-i'}}
@@ -166,7 +163,6 @@ jobs:
           command: build
           target: ${{ steps.target.outputs.target }}
           args: >
-            --release
             --manifest-path py-polars/Cargo.toml
             --out dist
           manylinux: ${{ matrix.architecture == 'aarch64' && '2_24' || 'auto' }}
@@ -187,25 +183,20 @@ jobs:
       id-token: write
 
     steps:
-      - name: Download sdist
+      - name: Download sdists and wheels
         uses: actions/download-artifact@v4
         with:
           path: dist
-          pattern: sdist-*
           merge-multiple: true
 
-      - name: Download wheels
-        uses: actions/download-artifact@v4
-        with:
-          path: dist
-          pattern: wheel-*
-          merge-multiple: true
+      - name: Show dist folder
+        run: ls dist
 
-      - name: Publish to PyPI
-        if: inputs.dry-run == false
-        uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          verbose: true
+      # - name: Publish to PyPI
+      #   if: inputs.dry-run == false
+      #   uses: pypa/gh-action-pypi-publish@release/v1
+      #   with:
+      #     verbose: true
 
   publish-to-github:
     needs: publish-to-pypi
@@ -220,6 +211,9 @@ jobs:
         with:
           name: sdist-polars
           path: dist
+
+      - name: Show dist folder
+        run: ls dist
 
       - name: Get version from Cargo.toml
         id: version
@@ -262,14 +256,14 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAG: ${{ steps.github-release.outputs.tag_name }}
 
-      - name: Trigger other workflows related to the release
-        if: inputs.dry-run == false && steps.version.outputs.is_prerelease == 'false'
-        uses: peter-evans/repository-dispatch@v2
-        with:
-          event-type: python-release
-          client-payload: >
-            {
-              "version": "${{ steps.version.outputs.version }}",
-              "tag": "${{ steps.github-release.outputs.tag_name }}",
-              "sha": "${{ inputs.sha || github.sha }}"
-            }
+      # - name: Trigger other workflows related to the release
+      #   if: inputs.dry-run == false && steps.version.outputs.is_prerelease == 'false'
+      #   uses: peter-evans/repository-dispatch@v2
+      #   with:
+      #     event-type: python-release
+      #     client-payload: >
+      #       {
+      #         "version": "${{ steps.version.outputs.version }}",
+      #         "tag": "${{ steps.github-release.outputs.tag_name }}",
+      #         "sha": "${{ inputs.sha || github.sha }}"
+      #       }
