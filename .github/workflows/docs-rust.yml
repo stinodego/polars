@@ -11,6 +11,8 @@ on:
     paths:
       - crates/**
       - .github/workflows/docs-rust.yml
+  # Allow manual trigger for testing
+  workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}

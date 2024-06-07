@@ -16,6 +16,8 @@ on:
   repository_dispatch:
     types:
       - python-release
+  # Allow manual trigger for testing
+  workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
