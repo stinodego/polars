@@ -8,9 +8,6 @@ on:
   push:
     branches:
       - main
-    paths:
-      - crates/**
-      - .github/workflows/docs-rust.yml
   # Allow manual trigger for testing
   workflow_dispatch:
 
@@ -44,7 +41,7 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: target/doc
-          target-folder: docs/rust/dev
+          target-folder: api/rust/dev
           single-commit: true
 
       # Make sure documentation artifacts are not cached
