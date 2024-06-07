@@ -53,7 +53,6 @@ jobs:
         run: make html
 
       - name: Deploy Python docs for latest development version
-        if: ${{ github.ref_name == 'main' }}
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: py-polars/docs/build/html
@@ -72,7 +71,6 @@ jobs:
           echo "version=$version" >> "$GITHUB_OUTPUT"
 
       - name: Deploy Python docs for latest release version - versioned
-        if: github.event_name == 'repository_dispatch'
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: py-polars/docs/build/html
@@ -80,7 +78,6 @@ jobs:
           single-commit: true
 
       - name: Deploy Python docs for latest release version - stable
-        if: github.event_name == 'repository_dispatch'
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: py-polars/docs/build/html
