@@ -59,7 +59,7 @@ jobs:
         id: version
         shell: bash
         run: |
-          tag="0.20.32"
+          tag="py-0.20.32"
           regex="py-([0-9]+\.[0-9]+)\.[0-9]+.*"
           [[ $tag =~ $regex ]]
           version=${BASH_REMATCH[1]}
