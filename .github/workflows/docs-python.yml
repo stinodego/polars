@@ -57,10 +57,9 @@ jobs:
 
       - name: Parse the tag to find the major/minor version of Polars
         id: version
-        if: github.event_name == 'repository_dispatch'
         shell: bash
         run: |
-          tag="${{ github.event.client_payload.tag }}"
+          tag="0.20.32"
           regex="py-([0-9]+\.[0-9]+)\.[0-9]+.*"
           [[ $tag =~ $regex ]]
           version=${BASH_REMATCH[1]}
@@ -77,6 +76,5 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: py-polars/docs/build/html
-          # Keeping this folder for backwards compatibility
           target-folder: api/python/stable
           single-commit: true
