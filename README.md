@@ -174,7 +174,7 @@ Collect with `collect(streaming=True)` to run the query streaming.
 
 ### Python
 
-Install the latest Polars version with:
+Install the latest Polars version with this:
 
 ```sh
 pip install polars
