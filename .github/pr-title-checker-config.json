@@ -4,7 +4,7 @@
       "color": "EEEEEE"
     },
     "CHECKS": {
-      "regexp": "/^(build|chore|ci|depr|docs|feat|fix|perf|refactor|release|test)(\\(.*python.*\\))?\\!?\\: /",
+      "regexp": "^(build|chore|ci|depr|docs|feat|fix|perf|refactor|release|test)(\\(.*python.*\\))?\\!?\\: ",
       "ignoreLabels" : ["skip changelog"]
     },
     "MESSAGES": {
