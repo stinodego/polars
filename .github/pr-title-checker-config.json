@@ -1,15 +1,15 @@
 {
-    "LABEL": {
-      "name": "title needs formatting",
-      "color": "FF0000"
-    },
-    "CHECKS": {
-      "regexp": "^(build|chore|ci|depr|docs|feat|fix|perf|refactor|release|test)(\\((python|rust)\\!?(,(python|rust)\\!?)?\\))?\\!?\\: ",
-      "ignoreLabels" : ["skip changelog"]
-    },
-    "MESSAGES": {
-      "success": "Valid pull request title",
-      "failure": "Invalid pull request title",
-      "notice": "Check docs for guidelines: ..."
-    }
+  "LABEL": {
+    "name": "title needs formatting",
+    "color": "FF0000"
+  },
+  "CHECKS": {
+    "regexp": "^(build|chore|ci|depr|docs|feat|fix|perf|refactor|release|test)(\\((python|rust)\\!?(,(python|rust)\\!?)?\\))?\\!?\\: [A-Z]",
+    "ignoreLabels": ["skip changelog"]
+  },
+  "MESSAGES": {
+    "success": "Valid pull request title",
+    "failure": "Invalid pull request title! Please adhere to the guidelines: https://docs.pola.rs/development/contributing/#pull-requests",
+    "notice": ""
   }
+}
