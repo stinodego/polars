@@ -4,14 +4,12 @@ on:
     types:
       - opened
       - edited
-      - synchronize
-      - labeled
-      - unlabeled
 
 jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - uses: thehanimo/pr-title-checker@v1.4.1
+      - name: Check pull request title
+        uses: thehanimo/pr-title-checker@v1.4.2
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
