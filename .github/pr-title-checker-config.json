@@ -1,15 +1,15 @@
 {
     "LABEL": {
       "name": "title needs formatting",
-      "color": "EEEEEE"
+      "color": "FF0000"
     },
     "CHECKS": {
-      "regexp": "^(build|chore|ci|depr|docs|feat|fix|perf|refactor|release|test)(\\(.*python.*\\))?\\!?\\: ",
+      "regexp": "^(build|chore|ci|depr|docs|feat|fix|perf|refactor|release|test)(\\((python|rust)\\!?(,(python|rust)\\!?)?\\))?\\!?\\: ",
       "ignoreLabels" : ["skip changelog"]
     },
     "MESSAGES": {
-      "success": "All OK",
-      "failure": "Failing CI test",
-      "notice": ""
+      "success": "Valid pull request title",
+      "failure": "Invalid pull request title",
+      "notice": "Check docs for guidelines: ..."
     }
   }
